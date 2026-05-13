@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
 
@@ -13,6 +13,7 @@ const CartDrawer = () => {
   const [isLocating, setIsLocating] = useState(false);
 
   const advanceAmount = (cartTotal / 2).toFixed(0);
+  const upiId = "8795919866@ibl";
 
   const fetchLocation = () => {
     if (!navigator.geolocation) return;
@@ -26,6 +27,12 @@ const CartDrawer = () => {
       } catch { setDeliveryAddress(`${latitude}, ${longitude}`); }
       setIsLocating(false);
     }, () => setIsLocating(false));
+  };
+
+  const handleUPILink = () => {
+    // UPI Deep Link for mobile apps
+    const upiUrl = `upi://pay?pa=${upiId}&pn=Nikhil%20Bakery&am=${advanceAmount}&cu=INR&tn=Order%20Advance`;
+    window.location.href = upiUrl;
   };
 
   const handleCheckout = () => {
@@ -44,9 +51,9 @@ const CartDrawer = () => {
     cart.forEach((item, i) => message += `${i + 1}. ${item.name} x ${item.quantity}%0A`);
     
     message += `%0A*Total Bill: ₹${cartTotal}*%0A`;
-    message += `*Advance to Pay (50%): ₹${advanceAmount}*%0A`;
+    message += `*Advance Paid (50%): ₹${advanceAmount}*%0A`;
     message += `-----------------------------------%0A`;
-    message += `%0A_I am sending the *₹${advanceAmount} advance screenshot* below. Please confirm!_ ✅`;
+    message += `%0A_Order placed via Website. Please confirm!_ ✅`;
 
     window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
   };
@@ -59,10 +66,7 @@ const CartDrawer = () => {
           
           <motion.div className="cart-drawer" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}>
             <div className="cart-header">
-              <div className="cart-title">
-                <ShoppingBag size={24} />
-                <h2>Checkout</h2>
-              </div>
+              <div className="cart-title"><ShoppingBag size={24} /><h2>Checkout</h2></div>
               <button className="close-cart" onClick={() => setIsCartOpen(false)}><X size={24} /></button>
             </div>
 
@@ -87,13 +91,12 @@ const CartDrawer = () => {
                   </div>
 
                   <div className="cart-items">
-                    <h3>Your Items</h3>
                     {cart.map((item) => (
                       <div key={item.id} className="cart-item">
                         <div className="item-img"><img src={item.image} alt={item.name} /></div>
                         <div className="item-info">
                           <div className="item-header"><h4>{item.name}</h4><button className="remove-item" onClick={() => removeFromCart(item.id)}><Trash2 size={16} /></button></div>
-                          <div className="item-footer"><span className="item-price">{item.price}</span>
+                          <div className="item-footer"><span>{item.price}</span>
                             <div className="qty-controls">
                               <button onClick={() => updateQuantity(item.id, -1)}><Minus size={14} /></button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.id, 1)}><Plus size={14} /></button>
                             </div>
@@ -103,11 +106,15 @@ const CartDrawer = () => {
                     ))}
                   </div>
 
-                  <div className="quick-pay-info">
-                    <div className="upi-badge">
-                      <CreditCard size={16} /> <span>UPI: 8795919866@paytm</span>
+                  <div className="upi-payment-box">
+                    <div className="upi-header">
+                      <CreditCard size={18} /> <span>One-Click Pay</span>
                     </div>
-                    <p>Pay 50% advance and share screenshot on WhatsApp.</p>
+                    <p>Pay 50% advance instantly via PhonePe, GPay, or Paytm.</p>
+                    <button className="btn upi-pay-btn" onClick={handleUPILink}>
+                      Pay ₹{advanceAmount} Now
+                    </button>
+                    <span className="upi-id-text">ID: {upiId}</span>
                   </div>
                 </>
               ) : (
@@ -122,10 +129,12 @@ const CartDrawer = () => {
             {cart.length > 0 && (
               <div className="cart-footer">
                 <div className="payment-summary">
-                  <div className="summary-row"><span>Total</span><span>₹{cartTotal}</span></div>
-                  <div className="summary-row advance"><span>Advance (50%)</span><span>₹{advanceAmount}</span></div>
+                  <div className="summary-row"><span>Subtotal</span><span>₹{cartTotal}</span></div>
+                  <div className="summary-row advance"><span>Advance to Pay</span><span>₹{advanceAmount}</span></div>
                 </div>
-                <button className="btn btn-primary checkout-btn" onClick={handleCheckout}>Pay & Send Order</button>
+                <button className="btn btn-primary checkout-btn" onClick={handleCheckout}>
+                  Confirm & Send Order <Send size={18} />
+                </button>
               </div>
             )}
           </motion.div>
