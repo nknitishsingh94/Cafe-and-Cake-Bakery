@@ -6,7 +6,7 @@
   width: 95%;
   max-width: 1400px;
   padding: 15px 35px;
-  z-index: 1100; /* Increased to stay above overlay */
+  z-index: 1100;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(15px);
   border-radius: 100px;
@@ -27,8 +27,6 @@
   align-items: center;
   width: 100%;
 }
-
-/* ... Rest of existing styles remain same ... */
 
 .logo { text-decoration: none; display: flex; flex-direction: column; }
 .logo-text { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--text-main); line-height: 1; }
@@ -57,7 +55,7 @@
   .navbar { width: 92%; padding: 12px 20px; }
 }
 
-/* Updated Sidebar for Half-Screen/Compact Look */
+/* Updated Sidebar for Compact & Full Visibility */
 .mobile-overlay {
   position: fixed;
   inset: 0;
@@ -68,18 +66,18 @@
 
 .mobile-sidebar {
   position: fixed;
-  top: 15px; /* Aligned with floating navbar */
+  top: 15px;
   right: 15px;
-  width: 80%;
-  max-width: 320px;
-  max-height: 55vh; /* Half screen area as requested */
+  width: 75%;
+  max-width: 280px;
+  max-height: 52vh;
   background: white;
   z-index: 1050;
-  padding: 30px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  border-radius: 30px; /* Rounded look to match navbar */
+  border-radius: 25px;
   overflow: hidden;
 }
 
@@ -87,34 +85,46 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px; /* Reduced to bring buttons up */
+  margin-bottom: 25px;
+}
+
+.sidebar-header .logo-text {
+  font-size: 20px;
 }
 
 .sidebar-links {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Tighter gap to keep everything in the half-screen */
+  gap: 15px;
   margin-bottom: 25px;
 }
 
 .sidebar-links a {
   text-decoration: none;
-  font-size: 22px; /* Slightly smaller for compact look */
+  font-size: 18px;
   font-family: 'Playfair Display', serif;
   font-weight: 800;
   color: var(--text-main);
+  transition: var(--transition);
+}
+
+.sidebar-links a:hover {
+  color: var(--primary);
+  padding-left: 5px;
 }
 
 .sidebar-footer {
   margin-top: auto;
+  padding-top: 10px;
 }
 
 .full-btn {
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
+  border-radius: 12px;
 }
 
 .close-btn {
@@ -122,4 +132,5 @@
   border: none;
   cursor: pointer;
   color: var(--text-main);
+  padding: 5px;
 }
