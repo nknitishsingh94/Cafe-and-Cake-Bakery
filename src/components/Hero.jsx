@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
 const Hero = () => {
@@ -20,9 +21,9 @@ const Hero = () => {
               Handcrafted daily with passion, precision, and the finest organic ingredients.
             </p>
             <div className="hero-btns">
-              <button className="btn btn-primary">
+              <Link to="/menu" className="btn btn-primary">
                 Explore Menu <ArrowRight size={18} />
-              </button>
+              </Link>
             </div>
             
             <div className="hero-stats">

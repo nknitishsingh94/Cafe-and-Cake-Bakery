@@ -1,13 +1,13 @@
-import React from 'react';
 import { ShoppingCart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import './FeaturedMenu.css';
 
 const menuItems = [
   {
     id: 1,
     name: "Classic Chocolate Cake",
-    price: "$24.00",
+    price: "₹450",
     rating: 5.0,
     image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2089&auto=format&fit=crop",
     tag: "Best Seller"
@@ -15,7 +15,7 @@ const menuItems = [
   {
     id: 2,
     name: "Butter Croissant",
-    price: "$4.50",
+    price: "₹80",
     rating: 4.8,
     image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2052&auto=format&fit=crop",
     tag: "Fresh"
@@ -23,7 +23,7 @@ const menuItems = [
   {
     id: 3,
     name: "Iced Caramel Latte",
-    price: "$5.75",
+    price: "₹160",
     rating: 4.9,
     image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=2069&auto=format&fit=crop",
     tag: "Popular"
@@ -31,7 +31,7 @@ const menuItems = [
   {
     id: 4,
     name: "Blueberry Muffin",
-    price: "$3.90",
+    price: "₹90",
     rating: 4.7,
     image: "https://images.unsplash.com/photo-1558401391-7899b4bd5bbf?q=80&w=1972&auto=format&fit=crop",
     tag: "Daily Bake"
@@ -78,7 +78,7 @@ const FeaturedMenu = () => {
         </div>
         
         <div className="menu-footer">
-          <button className="btn btn-primary">View Full Menu</button>
+          <Link to="/menu" className="btn btn-primary">View Full Menu</Link>
         </div>
       </div>
     </section>
