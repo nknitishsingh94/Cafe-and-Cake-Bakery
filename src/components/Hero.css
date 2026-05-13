@@ -214,11 +214,33 @@
 }
 
 @media (max-width: 600px) {
+  .hero {
+    padding: 120px 0 60px;
+  }
   .hero-content h1 {
-    font-size: 38px;
+    font-size: 36px;
+    letter-spacing: -1px;
+  }
+  .hero-content p {
+    font-size: 16px;
+    margin-bottom: 30px;
   }
   .hero-btns {
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+  }
+  .hero-btns .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-stats {
+    gap: 20px;
+  }
+  .stat-num {
+    font-size: 22px;
+  }
+  .stat-label {
+    font-size: 12px;
   }
 }
