@@ -6,7 +6,7 @@
   width: 95%;
   max-width: 1400px;
   padding: 15px 35px;
-  z-index: 1100;
+  z-index: 1050; /* Base z-index */
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(15px);
   border-radius: 100px;
@@ -15,10 +15,28 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Fix for the background effect when menu is open */
+.navbar.menu-open {
+  background: transparent;
+  backdrop-filter: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: 1001; /* Stay below sidebar but above overlay if needed, or just let sidebar header handle it */
+}
+
 .navbar.scrolled {
   top: 10px;
   width: 98%;
   background: rgba(255, 255, 255, 0.95);
+}
+
+/* Ensure Logo is visible when menu is open */
+.navbar.menu-open .logo {
+  opacity: 0; /* Hide navbar logo since sidebar has its own */
+}
+
+.navbar.menu-open .mobile-actions {
+  opacity: 0; /* Hide icons in navbar when menu is open */
 }
 
 .navbar-container {
@@ -28,7 +46,7 @@
   width: 100%;
 }
 
-.logo { text-decoration: none; display: flex; flex-direction: column; }
+.logo { text-decoration: none; display: flex; flex-direction: column; transition: var(--transition); }
 .logo-text { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--text-main); line-height: 1; }
 .logo-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: 700; }
 
@@ -47,7 +65,7 @@
 .nav-search-form { display: flex; align-items: center; background: var(--bg-main); padding: 6px 15px; border-radius: 50px; gap: 10px; }
 .nav-search-form input { background: none; border: none; outline: none; width: 100%; font-size: 13px; }
 
-.mobile-actions { display: none; align-items: center; gap: 5px; }
+.mobile-actions { display: none; align-items: center; gap: 5px; transition: var(--transition); }
 
 @media (max-width: 1100px) {
   .desktop-nav { display: none; }
@@ -55,13 +73,13 @@
   .navbar { width: 92%; padding: 12px 20px; }
 }
 
-/* Updated Sidebar for Compact & Full Visibility */
+/* Sidebar Styles */
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(2px);
-  z-index: 1000;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1100; /* Overlay above navbar */
 }
 
 .mobile-sidebar {
@@ -72,11 +90,11 @@
   max-width: 280px;
   max-height: 52vh;
   background: white;
-  z-index: 1050;
+  z-index: 1200; /* Sidebar on top of everything */
   padding: 25px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   border-radius: 25px;
   overflow: hidden;
 }
@@ -86,10 +104,6 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-}
-
-.sidebar-header .logo-text {
-  font-size: 20px;
 }
 
 .sidebar-links {
@@ -106,17 +120,6 @@
   font-family: 'Playfair Display', serif;
   font-weight: 800;
   color: var(--text-main);
-  transition: var(--transition);
-}
-
-.sidebar-links a:hover {
-  color: var(--primary);
-  padding-left: 5px;
-}
-
-.sidebar-footer {
-  margin-top: auto;
-  padding-top: 10px;
 }
 
 .full-btn {
@@ -124,13 +127,8 @@
   padding: 12px;
   text-align: center;
   font-size: 14px;
-  border-radius: 12px;
 }
 
 .close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-main);
-  padding: 5px;
+  background: none; border: none; cursor: pointer; color: var(--text-main);
 }
