@@ -21,7 +21,7 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'Menu', href: '/menu' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -37,10 +37,10 @@ const Navbar = () => {
           <ul className="nav-links">
             {navLinks.map((link) => (
               <li key={link.name}>
-                {link.href.startsWith('/') ? (
-                  <Link to={link.href}>{link.name}</Link>
-                ) : (
+                {link.href.includes('#') ? (
                   <a href={link.href}>{link.name}</a>
+                ) : (
+                  <Link to={link.href}>{link.name}</Link>
                 )}
               </li>
             ))}
@@ -73,10 +73,10 @@ const Navbar = () => {
             <ul className="mobile-links">
                {navLinks.map((link) => (
                 <li key={link.name} onClick={() => setIsOpen(false)}>
-                  {link.href.startsWith('/') ? (
-                    <Link to={link.href}>{link.name}</Link>
-                  ) : (
+                  {link.href.includes('#') ? (
                     <a href={link.href}>{link.name}</a>
+                  ) : (
+                    <Link to={link.href}>{link.name}</Link>
                   )}
                 </li>
               ))}
