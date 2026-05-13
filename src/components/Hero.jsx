@@ -23,10 +23,6 @@ const Hero = () => {
               <button className="btn btn-primary">
                 Explore Menu <ArrowRight size={18} />
               </button>
-              <button className="btn-secondary">
-                <div className="play-icon"><Play size={16} fill="currentColor" /></div>
-                Our Story
-              </button>
             </div>
             
             <div className="hero-stats">

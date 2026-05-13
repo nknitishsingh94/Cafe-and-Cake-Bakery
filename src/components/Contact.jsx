@@ -73,7 +73,7 @@ const Contact = () => {
                 <label>Your Message</label>
                 <textarea rows="5" placeholder="Tell us how we can help..."></textarea>
               </div>
-              <button className="btn btn-primary w-full">
+              <button className="btn btn-primary">
                 Send Message <Send size={18} />
               </button>
             </form>

@@ -1,0 +1,135 @@
+.about-section {
+  padding: 120px 0;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.about-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 80px;
+}
+
+.about-image-side {
+  position: relative;
+}
+
+.image-stack {
+  position: relative;
+  padding: 30px;
+}
+
+.img-main {
+  width: 100%;
+  border-radius: 40px;
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.img-overlay-card {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--primary);
+  color: white;
+  padding: 30px 40px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(139, 94, 52, 0.4);
+}
+
+.img-overlay-card .years {
+  font-size: 42px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  line-height: 1;
+}
+
+.img-overlay-card .label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+.about-text-side .sub-title {
+  margin-bottom: 20px;
+}
+
+.about-text-side h2 {
+  font-size: 52px;
+  margin-bottom: 30px;
+  line-height: 1.1;
+}
+
+.lead {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 25px;
+}
+
+.about-text-side p {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.about-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.a-feat {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.feat-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+@media (max-width: 992px) {
+  .about-wrapper {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    text-align: center;
+  }
+  
+  .about-features {
+    justify-content: center;
+  }
+  
+  .a-feat {
+    justify-content: center;
+  }
+  
+  .image-stack {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-text-side h2 {
+    font-size: 38px;
+  }
+  .img-overlay-card {
+    padding: 20px;
+  }
+  .img-overlay-card .years {
+    font-size: 32px;
+  }
+}
