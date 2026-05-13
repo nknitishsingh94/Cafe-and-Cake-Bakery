@@ -1,87 +1,64 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CheckCircle, CreditCard, Camera } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
 
 const CartDrawer = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();
+  const [checkoutStep, setCheckoutStep] = useState(1); // 1: Info, 2: Payment
   const [customerName, setCustomerName] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [orderType, setOrderType] = useState('delivery'); // 'delivery' or 'dine-in'
+  const [orderType, setOrderType] = useState('delivery');
   const [tableNumber, setTableNumber] = useState('');
+  const [transactionId, setTransactionId] = useState('');
   const [isLocating, setIsLocating] = useState(false);
 
+  const advanceAmount = (cartTotal / 2).toFixed(0);
+
   const fetchLocation = () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser.");
-      return;
-    }
-    
+    if (!navigator.geolocation) return;
     setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        try {
-          // Reverse geocoding using a free API (Nominatim)
-          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-          const data = await response.json();
-          setDeliveryAddress(data.display_name || `Lat: ${latitude}, Lon: ${longitude}`);
-        } catch (error) {
-          setDeliveryAddress(`Lat: ${latitude}, Lon: ${longitude}`);
-        }
-        setIsLocating(false);
-      },
-      (error) => {
-        alert("Unable to retrieve your location. Please enter it manually.");
-        setIsLocating(false);
-      }
-    );
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+        const data = await res.json();
+        setDeliveryAddress(data.display_name || `${latitude}, ${longitude}`);
+      } catch { setDeliveryAddress(`${latitude}, ${longitude}`); }
+      setIsLocating(false);
+    }, () => setIsLocating(false));
   };
 
-  const handleCheckout = () => {
-    if (cart.length === 0) return;
-    if (!customerName.trim()) {
-      alert("Please enter your name.");
-      return;
-    }
-    if (orderType === 'delivery' && !deliveryAddress.trim()) {
-      alert("Please enter your delivery address.");
-      return;
-    }
-    if (orderType === 'dine-in' && !tableNumber.trim()) {
-      alert("Please enter your table number.");
-      return;
-    }
+  const handleNextStep = () => {
+    if (!customerName.trim()) return alert("Please enter your name.");
+    if (orderType === 'delivery' && !deliveryAddress.trim()) return alert("Please enter address.");
+    if (orderType === 'dine-in' && !tableNumber.trim()) return alert("Please enter table number.");
+    setCheckoutStep(2);
+  };
+
+  const handleFinalOrder = () => {
+    if (!transactionId.trim()) return alert("Please enter the Transaction ID / Proof.");
 
     const businessNumber = "918795919866"; 
-    const advanceAmount = (cartTotal / 2).toFixed(0);
+    let message = `*📦 CONFIRMED ORDER & ADVANCE PAID*%0A%0A`;
+    message += `*Customer:* ${customerName}%0A`;
+    message += `*Order Type:* ${orderType.toUpperCase()}%0A`;
+    if (orderType === 'delivery') message += `📍 *Address:* ${deliveryAddress}%0A`;
+    else message += `🪑 *Table:* ${tableNumber}%0A`;
     
-    let message = `*📦 New ${orderType.toUpperCase()} Order from Nikhil's Bakery*%0A%0A`;
-    message += `*Customer Details:*%0A`;
-    message += `👤 Name: ${customerName}%0A`;
+    message += `%0A*💳 PAYMENT PROOF*%0A`;
+    message += `*Transaction ID:* ${transactionId}%0A`;
+    message += `*Advance Paid (50%):* ₹${advanceAmount}%0A`;
+    message += `*Balance Due:* ₹${advanceAmount}%0A`;
     
-    if (orderType === 'delivery') {
-      message += `📍 Address: ${deliveryAddress}%0A`;
-    } else {
-      message += `🪑 Table Number: ${tableNumber}%0A`;
-    }
+    message += `%0A*Items:*%0A`;
+    cart.forEach((item, i) => message += `${i + 1}. ${item.name} x ${item.quantity}%0A`);
     
-    message += `-----------------------------------%0A`;
-    
-    cart.forEach((item, index) => {
-      message += `${index + 1}. *${item.name}*%0A`;
-      message += `   Qty: ${item.quantity} | Price: ${item.price}%0A`;
-    });
+    message += `%0A*Total Bill: ₹${cartTotal}*%0A`;
+    message += `%0A_This is my proof of advance payment. Please confirm!_ ✅`;
 
-    message += `-----------------------------------%0A`;
-    message += `*Total Order Value: ₹${cartTotal}*%0A`;
-    message += `*Advance (50%): ₹${advanceAmount}*%0A`;
-    message += `-----------------------------------%0A`;
-    message += `%0APlease confirm my *${orderType}* order! 🍰`;
-
-    const whatsappUrl = `https://wa.me/${businessNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
   };
 
   return (
@@ -90,12 +67,11 @@ const CartDrawer = () => {
         <>
           <motion.div className="cart-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsCartOpen(false)} />
           
-          <motion.div className="cart-drawer" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
+          <motion.div className="cart-drawer" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}>
             <div className="cart-header">
               <div className="cart-title">
                 <ShoppingBag size={24} />
-                <h2>Your Bag</h2>
-                <span className="item-count-badge">{cart.length}</span>
+                <h2>{checkoutStep === 1 ? 'Your Bag' : 'Secure Payment'}</h2>
               </div>
               <button className="close-cart" onClick={() => setIsCartOpen(false)}><X size={24} /></button>
             </div>
@@ -103,61 +79,72 @@ const CartDrawer = () => {
             <div className="cart-content">
               {cart.length > 0 ? (
                 <>
-                  {/* Order Type Toggle */}
-                  <div className="order-type-toggle">
-                    <button className={orderType === 'delivery' ? 'active' : ''} onClick={() => setOrderType('delivery')}>
-                      <Navigation size={18} /> Home Delivery
-                    </button>
-                    <button className={orderType === 'dine-in' ? 'active' : ''} onClick={() => setOrderType('dine-in')}>
-                      <Store size={18} /> Dine-in / Shop
-                    </button>
-                  </div>
-
-                  <div className="customer-info-form">
-                    <div className="input-group">
-                      <User size={18} />
-                      <input type="text" placeholder="Your Full Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} required />
-                    </div>
-
-                    {orderType === 'delivery' ? (
-                      <div className="input-group address-group">
-                        <MapIcon size={18} />
-                        <textarea placeholder="Delivery Address" rows="2" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} required />
-                        <button className={`location-btn ${isLocating ? 'locating' : ''}`} onClick={fetchLocation} title="Use Live Location">
-                          <Navigation size={16} />
-                        </button>
+                  {checkoutStep === 1 ? (
+                    <>
+                      <div className="order-type-toggle">
+                        <button className={orderType === 'delivery' ? 'active' : ''} onClick={() => setOrderType('delivery')}><Navigation size={18} /> Delivery</button>
+                        <button className={orderType === 'dine-in' ? 'active' : ''} onClick={() => setOrderType('dine-in')}><Store size={18} /> Shop</button>
                       </div>
-                    ) : (
-                      <div className="input-group">
-                        <Store size={18} />
-                        <input type="text" placeholder="Table Number" value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} required />
-                      </div>
-                    )}
-                  </div>
 
-                  <div className="cart-items">
-                    <h3>Order Items</h3>
-                    {cart.map((item) => (
-                      <div key={item.id} className="cart-item">
-                        <div className="item-img"><img src={item.image} alt={item.name} /></div>
-                        <div className="item-info">
-                          <div className="item-header">
-                            <h4>{item.name}</h4>
-                            <button className="remove-item" onClick={() => removeFromCart(item.id)}><Trash2 size={16} /></button>
+                      <div className="customer-info-form">
+                        <div className="input-group"><User size={18} /><input type="text" placeholder="Your Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></div>
+                        {orderType === 'delivery' ? (
+                          <div className="input-group address-group">
+                            <MapIcon size={18} /><textarea placeholder="Delivery Address" rows="2" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} />
+                            <button className={`location-btn ${isLocating ? 'locating' : ''}`} onClick={fetchLocation}><Navigation size={16} /></button>
                           </div>
-                          <p className="item-cat">{item.category}</p>
-                          <div className="item-footer">
-                            <span className="item-price">{item.price}</span>
-                            <div className="qty-controls">
-                              <button onClick={() => updateQuantity(item.id, -1)}><Minus size={14} /></button>
-                              <span>{item.quantity}</span>
-                              <button onClick={() => updateQuantity(item.id, 1)}><Plus size={14} /></button>
+                        ) : (
+                          <div className="input-group"><Store size={18} /><input type="text" placeholder="Table Number" value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} /></div>
+                        )}
+                      </div>
+
+                      <div className="cart-items">
+                        <h3>Order Items</h3>
+                        {cart.map((item) => (
+                          <div key={item.id} className="cart-item">
+                            <div className="item-img"><img src={item.image} alt={item.name} /></div>
+                            <div className="item-info">
+                              <div className="item-header"><h4>{item.name}</h4><button className="remove-item" onClick={() => removeFromCart(item.id)}><Trash2 size={16} /></button></div>
+                              <div className="item-footer"><span className="item-price">{item.price}</span>
+                                <div className="qty-controls">
+                                  <button onClick={() => updateQuantity(item.id, -1)}><Minus size={14} /></button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.id, 1)}><Plus size={14} /></button>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="payment-step">
+                      <div className="payment-card">
+                        <div className="qr-placeholder">
+                          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8795919866@paytm%26pn=Nikhil%20Bakery%26am=${advanceAmount}" alt="Payment QR" />
+                        </div>
+                        <div className="upi-info">
+                          <p>UPI ID: <strong>8795919866@paytm</strong></p>
+                          <p className="pay-amount">Pay Advance: <strong>₹{advanceAmount}</strong></p>
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="proof-form">
+                        <h3>Submit Payment Proof</h3>
+                        <p>Enter the 12-digit UTR / Transaction ID after paying.</p>
+                        <div className="input-group">
+                          <CheckCircle size={18} />
+                          <input 
+                            type="text" 
+                            placeholder="Transaction ID (UTR Number)" 
+                            value={transactionId}
+                            onChange={(e) => setTransactionId(e.target.value)}
+                          />
+                        </div>
+                        <button className="btn btn-secondary upload-btn">
+                          <Camera size={18} /> Add Screenshot Proof
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="empty-cart">
@@ -172,11 +159,16 @@ const CartDrawer = () => {
               <div className="cart-footer">
                 <div className="payment-summary">
                   <div className="summary-row"><span>Total Amount</span><span>₹{cartTotal}</span></div>
-                  <div className="summary-row advance"><span>Advance (50%)</span><span>₹{(cartTotal / 2).toFixed(0)}</span></div>
+                  <div className="summary-row advance"><span>Advance to Pay</span><span>₹{advanceAmount}</span></div>
                 </div>
-                <button className="btn btn-primary checkout-btn" onClick={handleCheckout}>
-                  {orderType === 'delivery' ? 'Send Delivery Order' : 'Place Shop Order'}
-                </button>
+                {checkoutStep === 1 ? (
+                  <button className="btn btn-primary checkout-btn" onClick={handleNextStep}>Proceed to Payment</button>
+                ) : (
+                  <div className="step-actions">
+                    <button className="btn btn-secondary back-btn" onClick={() => setCheckoutStep(1)}>Back</button>
+                    <button className="btn btn-primary checkout-btn" onClick={handleFinalOrder}>Send Order & Proof</button>
+                  </div>
+                )}
               </div>
             )}
           </motion.div>
