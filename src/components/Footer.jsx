@@ -1,5 +1,6 @@
 import React from 'react';
 import { Share2, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -25,11 +26,11 @@ const Footer = () => {
           <div className="footer-links">
             <h3>Quick Links</h3>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Menu</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/about">Our Story</Link></li>
+              <li><Link to="/menu">Menu</Link></li>
               <li><a href="#">Catering</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
 

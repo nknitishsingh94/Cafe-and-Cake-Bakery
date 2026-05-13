@@ -10,6 +10,7 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MenuPage from './pages/MenuPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             </main>
           } />
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
         <Footer />
       </div>

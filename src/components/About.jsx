@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import './About.css';
 
 const About = () => {
@@ -60,7 +61,7 @@ const About = () => {
               </div>
             </div>
 
-            <button className="btn btn-primary">Learn More About Us</button>
+            <Link to="/about" className="btn btn-primary">Learn More About Us</Link>
           </motion.div>
         </div>
       </div>
