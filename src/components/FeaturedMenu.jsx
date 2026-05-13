@@ -40,7 +40,7 @@ const menuItems = [
 
 const FeaturedMenu = () => {
   return (
-    <section className="menu-section">
+    <section className="menu-section" id="menu">
       <div className="container">
         <div className="section-header">
           <span className="sub-title">From Our Kitchen</span>
