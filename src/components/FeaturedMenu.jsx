@@ -7,26 +7,26 @@ import './FeaturedMenu.css';
 
 const menuItems = [
   {
-    id: 1,
-    name: "Artisanal Sourdough",
+    id: 'f1',
+    name: "Classic Sourdough",
     price: "₹180",
-    image: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?q=80&w=1974&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=2070&auto=format&fit=crop",
     category: "Breads",
     rating: 4.9
   },
   {
-    id: 2,
-    name: "Chocolate Truffle Cake",
+    id: 'f2',
+    name: "Velvet Truffle Cake",
     price: "₹450",
-    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2089&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1974&auto=format&fit=crop",
     category: "Cakes",
     rating: 5.0
   },
   {
-    id: 3,
-    name: "Premium Cappuccino",
+    id: 'f3',
+    name: "Signature Cappuccino",
     price: "₹140",
-    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=1974&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=1974&auto=format&fit=crop",
     category: "Cafe",
     rating: 4.8
   }
@@ -42,9 +42,10 @@ const FeaturedMenu = () => {
           <div className="header-text">
             <span className="sub-title">Top Picks</span>
             <h2>Our Featured Menu</h2>
+            <p>Hand-selected favorites for the perfect bakery experience.</p>
           </div>
           <Link to="/menu" className="view-all">
-            View Full Menu <ArrowRight size={20} />
+            Explore All 50+ Items <ArrowRight size={20} />
           </Link>
         </div>
 
@@ -52,28 +53,32 @@ const FeaturedMenu = () => {
           {menuItems.map((item, index) => (
             <motion.div 
               key={item.id}
-              className="menu-card"
+              className="featured-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
+              whileHover={{ y: -10 }}
             >
-              <div className="card-image">
+              <div className="featured-image">
                 <img src={item.image} alt={item.name} />
-                <span className="card-badge">{item.category}</span>
-                <div className="rating-badge">
-                  <Star size={12} fill="currentColor" /> {item.rating}
+                <div className="overlay">
+                  <span className="category-tag">{item.category}</span>
+                  <div className="rating-tag">
+                    <Star size={12} fill="currentColor" /> {item.rating}
+                  </div>
                 </div>
               </div>
-              <div className="card-content">
+              <div className="featured-info">
                 <h3>{item.name}</h3>
-                <div className="card-footer">
-                  <span className="price">{item.price}</span>
+                <div className="featured-bottom">
+                  <span className="price-tag">{item.price}</span>
                   <button 
-                    className="btn btn-primary"
+                    className="quick-add-btn"
                     onClick={() => addToCart(item)}
+                    title="Add to Bag"
                   >
-                    Order Now
+                    <ShoppingBag size={18} /> Order
                   </button>
                 </div>
               </div>
