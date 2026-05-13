@@ -12,13 +12,14 @@
   margin-bottom: 60px;
 }
 
-.footer-logo {
-  height: 70px;
-  width: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1); /* Makes it white on dark background if needed */
-  opacity: 0.9;
+.footer-brand .logo-text {
+  color: var(--accent);
 }
+
+.footer-brand .logo-sub {
+  color: #a69b93;
+}
+
 
 
 .brand-desc {

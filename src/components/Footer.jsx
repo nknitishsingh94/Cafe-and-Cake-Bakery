@@ -1,6 +1,5 @@
 import React from 'react';
 import { Share2, Mail, Phone, MapPin } from 'lucide-react';
-import logo from '../assets/logo.png';
 import './Footer.css';
 
 const Footer = () => {
@@ -10,7 +9,8 @@ const Footer = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="logo">
-              <img src={logo} alt="NS Bakery" className="footer-logo" />
+              <span className="logo-text">Nikhil's</span>
+              <span className="logo-sub">Bakery & Cafe</span>
             </div>
             <p className="brand-desc">
               Crafting sweet moments and brewing excellence since 2021. Your favorite neighborhood spot for fresh bakes and premium coffee.
