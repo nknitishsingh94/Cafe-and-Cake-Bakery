@@ -33,27 +33,17 @@
   transition: var(--transition);
 }
 
-.logo {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+.navbar-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--transition);
 }
 
-.logo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 1px;
+.navbar.scrolled .navbar-logo {
+  height: 45px;
 }
 
-.logo-sub {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
 
 .desktop-nav {
   display: flex;

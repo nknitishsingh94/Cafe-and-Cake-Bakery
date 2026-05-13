@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Cake, Coffee, Search, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -25,8 +26,7 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <span className="logo-text">Nikhil's</span>
-          <span className="logo-sub">Bakery & Cafe</span>
+          <img src={logo} alt="NS Bakery" className="navbar-logo" />
         </div>
 
         {/* Desktop Navigation */}
