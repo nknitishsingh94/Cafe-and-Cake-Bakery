@@ -48,7 +48,7 @@ const Navbar = () => {
                 onClick={() => setMenuOpen(!menuOpen)}
                 onMouseEnter={() => setMenuOpen(true)}
               >
-                Our Menu <ChevronDown size={18} className={menuOpen ? 'rotate' : ''} />
+                Menu <ChevronDown size={18} className={menuOpen ? 'rotate' : ''} />
               </button>
               
               <AnimatePresence>

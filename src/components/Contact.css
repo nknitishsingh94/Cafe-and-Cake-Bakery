@@ -127,19 +127,25 @@
   box-shadow: 0 0 0 4px rgba(139, 94, 52, 0.1);
 }
 
-.contact-form-panel button {
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.contact-form-panel .form-actions button {
   width: auto;
-  min-width: 180px;
-  padding: 14px 30px;
-  margin-top: 10px;
+  min-width: 200px;
+  padding: 14px 35px;
 }
 
 @media (max-width: 600px) {
-  .contact-form-panel button {
+  .contact-form-panel .form-actions button {
     width: 100%;
     min-width: unset;
   }
 }
+
 
 
 @media (max-width: 1200px) {
