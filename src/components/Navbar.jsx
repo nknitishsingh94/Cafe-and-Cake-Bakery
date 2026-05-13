@@ -107,7 +107,7 @@ const Navbar = () => {
                 </li>
               ))}
               <li className="mobile-dropdown-section">
-                <span className="section-title">Our Menu</span>
+                <span className="section-title">Menu</span>
                 <div className="mobile-menu-grid">
                   <a href="#" className="mobile-menu-item" onClick={() => setIsOpen(false)}>
                     <Cake size={24} />
