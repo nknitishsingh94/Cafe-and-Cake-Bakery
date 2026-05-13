@@ -71,42 +71,42 @@ h2 {
 }
 
 .btn {
-  padding: 14px 30px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   transition: var(--transition);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  border: 2px solid transparent;
 }
 
 .btn-primary {
   background-color: var(--primary);
   color: var(--white);
-  box-shadow: 0 10px 25px rgba(139, 94, 52, 0.2);
+  box-shadow: 0 4px 14px 0 rgba(139, 94, 52, 0.3);
 }
 
 .btn-primary:hover {
   background-color: var(--primary-light);
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(139, 94, 52, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 94, 52, 0.23);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--text-main);
+  color: var(--primary);
   border: 2px solid var(--primary);
 }
 
 .btn-outline:hover {
   background: var(--primary);
   color: var(--white);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
+
 
 
 /* Custom Scrollbar */
