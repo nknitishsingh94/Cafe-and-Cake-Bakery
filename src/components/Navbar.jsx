@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Cake, Coffee, Search, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +18,15 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/menu?search=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -27,30 +38,53 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <div className="logo">
+        <Link to="/" className="logo">
           <span className="logo-text">Nikhil's</span>
           <span className="logo-sub">Bakery & Cafe</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="desktop-nav">
-          <ul className="nav-links">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                {link.href.includes('#') ? (
-                  <a href={link.href}>{link.name}</a>
-                ) : (
-                  <Link to={link.href}>{link.name}</Link>
-                )}
-              </li>
-            ))}
-            
-          </ul>
+          {!isSearchOpen ? (
+            <ul className="nav-links">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  {link.href.includes('#') ? (
+                    <a href={link.href}>{link.name}</a>
+                  ) : (
+                    <Link to={link.href}>{link.name}</Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <motion.form 
+              className="nav-search-form"
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: '400px' }}
+              onSubmit={handleSearch}
+            >
+              <input 
+                type="text" 
+                placeholder="Search for cakes, coffee, pastries..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+              />
+              <button type="button" className="close-search" onClick={() => setIsSearchOpen(false)}>
+                <X size={18} />
+              </button>
+            </motion.form>
+          )}
 
           <div className="nav-actions">
-            <button className="icon-btn"><Search size={20} /></button>
+            {!isSearchOpen && (
+              <button className="icon-btn" onClick={() => setIsSearchOpen(true)}>
+                <Search size={20} />
+              </button>
+            )}
             <button className="icon-btn"><ShoppingBag size={20} /></button>
-            <button className="btn btn-primary">Order Now</button>
+            <Link to="/menu" className="btn btn-primary">Order Now</Link>
           </div>
         </div>
 
