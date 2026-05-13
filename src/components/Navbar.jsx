@@ -27,6 +27,7 @@ const Navbar = () => {
       navigate(`/menu?search=${encodeURIComponent(searchQuery.trim())}`);
       setIsSearchOpen(false);
       setSearchQuery('');
+      setIsOpen(false);
     }
   };
 
@@ -93,47 +94,72 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Actions Container - To keep icons visible on mobile */}
+        {/* Mobile Header Icons */}
         <div className="mobile-actions">
-          {!isSearchOpen && (
-            <button className="icon-btn" onClick={() => setIsSearchOpen(true)}>
-              <Search size={22} />
-            </button>
-          )}
+          <button className="icon-btn" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+            <Search size={22} />
+          </button>
           <button className="icon-btn cart-trigger" onClick={() => setIsCartOpen(true)}>
             <ShoppingBag size={22} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </button>
-          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          <button className="mobile-toggle" onClick={() => setIsOpen(true)}>
+            <Menu size={28} />
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Sidebar */}
+      {/* Full-Screen Mobile Menu Sidebar (The "Premium" version) */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            className="mobile-nav"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            <ul className="mobile-links">
-               {navLinks.map((link) => (
-                <li key={link.name} onClick={() => setIsOpen(false)}>
-                  {link.href.includes('#') ? (
-                    <a href={link.href}>{link.name}</a>
-                  ) : (
-                    <Link to={link.href}>{link.name}</Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <div className="mobile-cta" onClick={() => setIsOpen(false)}>
-              <Link to="/menu" className="btn btn-primary">Order Now</Link>
-            </div>
-          </motion.div>
+          <>
+            <motion.div 
+              className="mobile-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div 
+              className="mobile-sidebar"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <div className="sidebar-header">
+                <div className="logo">
+                  <span className="logo-text">Nikhil's</span>
+                </div>
+                <button className="close-btn" onClick={() => setIsOpen(false)}>
+                  <X size={30} />
+                </button>
+              </div>
+
+              <ul className="sidebar-links">
+                {navLinks.map((link, i) => (
+                  <motion.li 
+                    key={link.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    {link.href.includes('#') ? (
+                      <a href={link.href} onClick={() => setIsOpen(false)}>{link.name}</a>
+                    ) : (
+                      <Link to={link.href} onClick={() => setIsOpen(false)}>{link.name}</Link>
+                    )}
+                  </motion.li>
+                ))}
+              </ul>
+
+              <div className="sidebar-footer">
+                <Link to="/menu" className="btn btn-primary full-btn" onClick={() => setIsOpen(false)}>
+                  Order Now
+                </Link>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
