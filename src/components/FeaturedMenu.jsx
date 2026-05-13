@@ -1,84 +1,84 @@
-import { ShoppingCart, Star } from 'lucide-react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import { ShoppingBag, Star, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './FeaturedMenu.css';
 
 const menuItems = [
   {
     id: 1,
-    name: "Classic Chocolate Cake",
-    price: "₹450",
-    rating: 5.0,
-    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2089&auto=format&fit=crop",
-    tag: "Best Seller"
+    name: "Artisanal Sourdough",
+    price: "₹180",
+    image: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?q=80&w=1974&auto=format&fit=crop",
+    category: "Breads",
+    rating: 4.9
   },
   {
     id: 2,
-    name: "Butter Croissant",
-    price: "₹80",
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2052&auto=format&fit=crop",
-    tag: "Fresh"
+    name: "Chocolate Truffle Cake",
+    price: "₹450",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2089&auto=format&fit=crop",
+    category: "Cakes",
+    rating: 5.0
   },
   {
     id: 3,
-    name: "Iced Caramel Latte",
-    price: "₹160",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=2069&auto=format&fit=crop",
-    tag: "Popular"
-  },
-  {
-    id: 4,
-    name: "Blueberry Muffin",
-    price: "₹90",
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1558401391-7899b4bd5bbf?q=80&w=1972&auto=format&fit=crop",
-    tag: "Daily Bake"
+    name: "Premium Cappuccino",
+    price: "₹140",
+    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=1974&auto=format&fit=crop",
+    category: "Cafe",
+    rating: 4.8
   }
 ];
 
 const FeaturedMenu = () => {
+  const { addToCart } = useCart();
+
   return (
     <section className="menu-section" id="menu">
       <div className="container">
         <div className="section-header">
-          <span className="sub-title">From Our Kitchen</span>
-          <h2>Today's Specials</h2>
+          <div className="header-text">
+            <span className="sub-title">Top Picks</span>
+            <h2>Our Featured Menu</h2>
+          </div>
+          <Link to="/menu" className="view-all">
+            View Full Menu <ArrowRight size={20} />
+          </Link>
         </div>
-        
+
         <div className="menu-grid">
-          {menuItems.map((item, i) => (
+          {menuItems.map((item, index) => (
             <motion.div 
-              key={item.id} 
+              key={item.id}
               className="menu-card"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="card-img-wrapper">
+              <div className="card-image">
                 <img src={item.image} alt={item.name} />
-                <span className="item-tag">{item.tag}</span>
-                <button className="add-cart-btn"><ShoppingCart size={18} /></button>
-              </div>
-              <div className="card-body">
-                <div className="card-top">
-                  <div className="rating">
-                    <Star size={14} fill="#d4a373" color="#d4a373" />
-                    <span>{item.rating}</span>
-                  </div>
-                  <span className="price">{item.price}</span>
+                <span className="card-badge">{item.category}</span>
+                <div className="rating-badge">
+                  <Star size={12} fill="currentColor" /> {item.rating}
                 </div>
+              </div>
+              <div className="card-content">
                 <h3>{item.name}</h3>
-                <p>Pure indulgence made with premium ingredients.</p>
+                <div className="card-footer">
+                  <span className="price">{item.price}</span>
+                  <button 
+                    className="btn btn-primary"
+                    onClick={() => addToCart(item)}
+                  >
+                    Order Now
+                  </button>
+                </div>
               </div>
             </motion.div>
           ))}
-        </div>
-        
-        <div className="menu-footer">
-          <Link to="/menu" className="btn btn-primary">View Full Menu</Link>
         </div>
       </div>
     </section>

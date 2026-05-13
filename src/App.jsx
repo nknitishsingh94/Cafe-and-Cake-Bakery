@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -11,32 +12,35 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MenuPage from './pages/MenuPage';
 import AboutPage from './pages/AboutPage';
+import CartDrawer from './components/CartDrawer';
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={
-            <main>
-              <Hero />
-              <Features />
-              <About />
-              <FeaturedMenu />
-              <Categories />
-              <Reviews />
-              <Contact />
-            </main>
-          } />
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/about" element={<AboutPage />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <CartDrawer />
+          <Routes>
+            <Route path="/" element={
+              <main>
+                <Hero />
+                <Features />
+                <About />
+                <FeaturedMenu />
+                <Categories />
+                <Reviews />
+                <Contact />
+              </main>
+            } />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
-
 
 export default App;

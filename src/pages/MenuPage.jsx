@@ -2,11 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, ArrowLeft, Filter, Search as SearchIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import { fullMenu } from '../data/menuData';
 import './MenuPage.css';
 
 const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { addToCart } = useCart();
   const location = useLocation();
   
   // Get search query from URL
@@ -25,6 +27,7 @@ const MenuPage = () => {
 
   return (
     <div className="menu-page">
+      {/* Header Section */}
       <div className="menu-page-header">
         <div className="container">
           <Link to="/" className="back-link">
@@ -39,6 +42,7 @@ const MenuPage = () => {
         </div>
       </div>
 
+      {/* Filter Bar */}
       <div className="filter-bar">
         <div className="container">
           <div className="filters">
@@ -55,6 +59,7 @@ const MenuPage = () => {
         </div>
       </div>
 
+      {/* Menu Grid Section */}
       <main className="menu-grid-section">
         <div className="container">
           {filteredItems.length > 0 ? (
@@ -76,7 +81,12 @@ const MenuPage = () => {
                       <h3>{item.name}</h3>
                       <span className="item-price">{item.price}</span>
                     </div>
-                    <button className="btn btn-primary order-btn">Order Now</button>
+                    <button 
+                      className="btn btn-primary order-btn"
+                      onClick={() => addToCart(item)}
+                    >
+                      Order Now
+                    </button>
                   </div>
                 </motion.div>
               ))}

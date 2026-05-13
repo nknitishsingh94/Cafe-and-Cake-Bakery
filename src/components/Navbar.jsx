@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Cake, Coffee, Search, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { cartCount, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,7 +85,10 @@ const Navbar = () => {
                 <Search size={20} />
               </button>
             )}
-            <button className="icon-btn"><ShoppingBag size={20} /></button>
+            <button className="icon-btn cart-trigger" onClick={() => setIsCartOpen(true)}>
+              <ShoppingBag size={20} />
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </button>
             <Link to="/menu" className="btn btn-primary">Order Now</Link>
           </div>
         </div>
@@ -99,10 +104,9 @@ const Navbar = () => {
         {isOpen && (
           <motion.div 
             className="mobile-nav"
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
           >
             <ul className="mobile-links">
                {navLinks.map((link) => (
@@ -114,10 +118,10 @@ const Navbar = () => {
                   )}
                 </li>
               ))}
-              <li className="mobile-cta">
-                <button className="btn btn-primary w-full">Order Now</button>
-              </li>
             </ul>
+            <div className="mobile-cta" onClick={() => setIsOpen(false)}>
+              <Link to="/menu" className="btn btn-primary">Order Now</Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
