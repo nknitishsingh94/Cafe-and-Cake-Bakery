@@ -39,77 +39,79 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-container">
-        <Link to="/" className="logo">
-          <span className="logo-text">Nikhil's</span>
-          <span className="logo-sub">Bakery & Cafe</span>
-        </Link>
+    <>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="navbar-container">
+          <Link to="/" className="logo">
+            <span className="logo-text">Nikhil's</span>
+            <span className="logo-sub">Bakery & Cafe</span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="desktop-nav">
-          {!isSearchOpen ? (
-            <ul className="nav-links">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  {link.href.includes('#') ? (
-                    <a href={link.href}>{link.name}</a>
-                  ) : (
-                    <Link to={link.href}>{link.name}</Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <motion.form 
-              className="nav-search-form"
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: '350px' }}
-              onSubmit={handleSearch}
-            >
-              <input 
-                type="text" 
-                placeholder="Search..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-              />
-              <button type="button" className="close-search" onClick={() => setIsSearchOpen(false)}>
-                <X size={18} />
-              </button>
-            </motion.form>
-          )}
-
-          <div className="nav-actions">
-            {!isSearchOpen && (
-              <button className="icon-btn" onClick={() => setIsSearchOpen(true)}>
-                <Search size={20} />
-              </button>
+          {/* Desktop Navigation */}
+          <div className="desktop-nav">
+            {!isSearchOpen ? (
+              <ul className="nav-links">
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    {link.href.includes('#') ? (
+                      <a href={link.href}>{link.name}</a>
+                    ) : (
+                      <Link to={link.href}>{link.name}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <motion.form 
+                className="nav-search-form"
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: '350px' }}
+                onSubmit={handleSearch}
+              >
+                <input 
+                  type="text" 
+                  placeholder="Search..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+                <button type="button" className="close-search" onClick={() => setIsSearchOpen(false)}>
+                  <X size={18} />
+                </button>
+              </motion.form>
             )}
+
+            <div className="nav-actions">
+              {!isSearchOpen && (
+                <button className="icon-btn" onClick={() => setIsSearchOpen(true)}>
+                  <Search size={20} />
+                </button>
+              )}
+              <button className="icon-btn cart-trigger" onClick={() => setIsCartOpen(true)}>
+                <ShoppingBag size={20} />
+                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+              </button>
+              <Link to="/menu" className="btn btn-primary">Order Now</Link>
+            </div>
+          </div>
+
+          {/* Mobile Header Icons */}
+          <div className="mobile-actions">
+            <button className="icon-btn" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+              <Search size={22} />
+            </button>
             <button className="icon-btn cart-trigger" onClick={() => setIsCartOpen(true)}>
-              <ShoppingBag size={20} />
+              <ShoppingBag size={22} />
               {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </button>
-            <Link to="/menu" className="btn btn-primary">Order Now</Link>
+            <button className="mobile-toggle" onClick={() => setIsOpen(true)}>
+              <Menu size={28} />
+            </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Header Icons */}
-        <div className="mobile-actions">
-          <button className="icon-btn" onClick={() => setIsSearchOpen(!isSearchOpen)}>
-            <Search size={22} />
-          </button>
-          <button className="icon-btn cart-trigger" onClick={() => setIsCartOpen(true)}>
-            <ShoppingBag size={22} />
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-          </button>
-          <button className="mobile-toggle" onClick={() => setIsOpen(true)}>
-            <Menu size={28} />
-          </button>
-        </div>
-      </div>
-
-      {/* Full-Screen Mobile Menu Sidebar (The "Premium" version) */}
+      {/* Mobile Menu Sidebar - MOVED OUTSIDE NAV to prevent background effects */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -162,7 +164,7 @@ const Navbar = () => {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

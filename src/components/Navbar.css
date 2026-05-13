@@ -6,8 +6,8 @@
   width: 95%;
   max-width: 1400px;
   padding: 12px 35px;
-  z-index: 1200; /* Higher than overlay so it stays white and clear */
-  background: #ffffff;
+  z-index: 1200; /* Higher than the overlay */
+  background: #ffffff !important; /* Solid White */
   border-radius: 100px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -17,7 +17,6 @@
 .navbar.scrolled {
   top: 10px;
   width: 98%;
-  background: #ffffff;
 }
 
 .navbar-container {
@@ -66,7 +65,7 @@
   max-width: 280px;
   max-height: 52vh;
   background: #ffffff;
-  z-index: 1300; /* Highest priority */
+  z-index: 1300; /* Above everything */
   padding: 25px;
   display: flex;
   flex-direction: column;
