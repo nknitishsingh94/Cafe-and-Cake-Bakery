@@ -6,8 +6,8 @@
   width: 95%;
   max-width: 1400px;
   padding: 12px 35px;
-  z-index: 1200; /* Higher than the overlay */
-  background: #ffffff !important; /* Solid White */
+  z-index: 1200;
+  background: #ffffff !important;
   border-radius: 100px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -49,14 +49,7 @@
   .navbar { width: 92%; padding: 10px 20px; top: 15px; }
 }
 
-/* Sidebar & Overlay Styles */
-.mobile-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1100; /* Just below the navbar */
-}
-
+/* Sidebar Styles - No Overlay, Just a Clean Slide */
 .mobile-sidebar {
   position: fixed;
   top: 15px;
@@ -65,13 +58,14 @@
   max-width: 280px;
   max-height: 52vh;
   background: #ffffff;
-  z-index: 1300; /* Above everything */
+  z-index: 1300;
   padding: 25px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   border-radius: 25px;
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Added border since no overlay */
 }
 
 .sidebar-header {

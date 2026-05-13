@@ -111,57 +111,48 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Sidebar - MOVED OUTSIDE NAV to prevent background effects */}
+      {/* Mobile Menu Sidebar - REMOVED OVERLAY completely for clean look */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div 
-              className="mobile-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div 
-              className="mobile-sidebar"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            >
-              <div className="sidebar-header">
-                <div className="logo">
-                  <span className="logo-text">Nikhil's</span>
-                </div>
-                <button className="close-btn" onClick={() => setIsOpen(false)}>
-                  <X size={30} />
-                </button>
+          <motion.div 
+            className="mobile-sidebar"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+          >
+            <div className="sidebar-header">
+              <div className="logo">
+                <span className="logo-text">Nikhil's</span>
               </div>
+              <button className="close-btn" onClick={() => setIsOpen(false)}>
+                <X size={30} />
+              </button>
+            </div>
 
-              <ul className="sidebar-links">
-                {navLinks.map((link, i) => (
-                  <motion.li 
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    {link.href.includes('#') ? (
-                      <a href={link.href} onClick={() => setIsOpen(false)}>{link.name}</a>
-                    ) : (
-                      <Link to={link.href} onClick={() => setIsOpen(false)}>{link.name}</Link>
-                    )}
-                  </motion.li>
-                ))}
-              </ul>
+            <ul className="sidebar-links">
+              {navLinks.map((link, i) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  {link.href.includes('#') ? (
+                    <a href={link.href} onClick={() => setIsOpen(false)}>{link.name}</a>
+                  ) : (
+                    <Link to={link.href} onClick={() => setIsOpen(false)}>{link.name}</Link>
+                  )}
+                </motion.li>
+              ))}
+            </ul>
 
-              <div className="sidebar-footer">
-                <Link to="/menu" className="btn btn-primary full-btn" onClick={() => setIsOpen(false)}>
-                  Order Now
-                </Link>
-              </div>
-            </motion.div>
-          </>
+            <div className="sidebar-footer">
+              <Link to="/menu" className="btn btn-primary full-btn" onClick={() => setIsOpen(false)}>
+                Order Now
+              </Link>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
