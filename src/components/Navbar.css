@@ -5,38 +5,20 @@
   transform: translateX(-50%);
   width: 95%;
   max-width: 1400px;
-  padding: 15px 35px;
-  z-index: 1050; /* Base z-index */
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Fix for the background effect when menu is open */
-.navbar.menu-open {
-  background: transparent;
-  backdrop-filter: none;
-  border-color: transparent;
-  box-shadow: none;
-  z-index: 1001; /* Stay below sidebar but above overlay if needed, or just let sidebar header handle it */
+  padding: 12px 35px;
+  z-index: 1100;
+  background: #ffffff; /* Solid White - No Transparency */
+  border-radius: 100px; /* The "Half Circle" sides you liked */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
 .navbar.scrolled {
   top: 10px;
   width: 98%;
-  background: rgba(255, 255, 255, 0.95);
-}
-
-/* Ensure Logo is visible when menu is open */
-.navbar.menu-open .logo {
-  opacity: 0; /* Hide navbar logo since sidebar has its own */
-}
-
-.navbar.menu-open .mobile-actions {
-  opacity: 0; /* Hide icons in navbar when menu is open */
+  background: #ffffff;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -46,40 +28,35 @@
   width: 100%;
 }
 
-.logo { text-decoration: none; display: flex; flex-direction: column; transition: var(--transition); }
+.logo { text-decoration: none; display: flex; flex-direction: column; }
 .logo-text { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--text-main); line-height: 1; }
 .logo-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: 700; }
 
 .desktop-nav { display: flex; align-items: center; gap: 40px; }
 .nav-links { display: flex; list-style: none; gap: 30px; }
-.nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 14px; transition: var(--transition); }
+.nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 14px; }
 .nav-links a:hover { color: var(--primary); }
 
 .nav-actions { display: flex; align-items: center; gap: 15px; }
-.icon-btn { background: none; border: none; cursor: pointer; color: var(--text-main); display: flex; align-items: center; justify-content: center; transition: var(--transition); width: 38px; height: 38px; border-radius: 50%; }
-.icon-btn:hover { background: rgba(212, 163, 115, 0.1); color: var(--primary); }
+.icon-btn { background: none; border: none; cursor: pointer; color: var(--text-main); display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; }
 
 .cart-trigger { position: relative; }
 .cart-badge { position: absolute; top: 2px; right: 2px; background: var(--primary); color: white; font-size: 9px; font-weight: 700; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
 
-.nav-search-form { display: flex; align-items: center; background: var(--bg-main); padding: 6px 15px; border-radius: 50px; gap: 10px; }
-.nav-search-form input { background: none; border: none; outline: none; width: 100%; font-size: 13px; }
-
-.mobile-actions { display: none; align-items: center; gap: 5px; transition: var(--transition); }
+.mobile-actions { display: none; align-items: center; gap: 8px; }
 
 @media (max-width: 1100px) {
   .desktop-nav { display: none; }
   .mobile-actions { display: flex; }
-  .navbar { width: 92%; padding: 12px 20px; }
+  .navbar { width: 92%; padding: 10px 20px; top: 15px; }
 }
 
-/* Sidebar Styles */
+/* Sidebar Styles - Simple & Clean */
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
-  z-index: 1100; /* Overlay above navbar */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
 }
 
 .mobile-sidebar {
@@ -89,12 +66,12 @@
   width: 75%;
   max-width: 280px;
   max-height: 52vh;
-  background: white;
-  z-index: 1200; /* Sidebar on top of everything */
+  background: #ffffff;
+  z-index: 1200;
   padding: 25px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   border-radius: 25px;
   overflow: hidden;
 }
