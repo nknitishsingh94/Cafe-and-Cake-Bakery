@@ -26,7 +26,7 @@ const Contact = () => {
                   <div className="icon-box"><Phone size={24} /></div>
                   <div>
                     <h4>Call Us</h4>
-                    <p>+91 98765 43210</p>
+                    <p>+91 87959 19866</p>
                   </div>
                 </div>
                 <div className="info-item">

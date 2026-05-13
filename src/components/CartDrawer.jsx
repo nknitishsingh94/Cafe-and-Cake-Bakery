@@ -10,8 +10,8 @@ const CartDrawer = () => {
   const handleCheckout = () => {
     if (cart.length === 0) return;
 
-    // Replace with the real WhatsApp number of the bakery
-    const businessNumber = "919876543210"; 
+    // Use the user's specific WhatsApp number
+    const businessNumber = "918795919866"; 
     
     // Construct a professional WhatsApp message
     let message = `*📦 New Order from Nikhil's Bakery*%0A`;
