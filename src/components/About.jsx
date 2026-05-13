@@ -21,8 +21,8 @@ const About = () => {
                 className="img-main" 
               />
               <div className="img-overlay-card">
-                <span className="years">15+</span>
-                <span className="label">Years of <br /> Legacy</span>
+                <span className="years">4+</span>
+                <span className="label">Years of <br /> Excellence</span>
               </div>
             </div>
           </motion.div>
@@ -37,7 +37,7 @@ const About = () => {
             <span className="sub-title">Our Story</span>
             <h2>Baked with Passion, <br />Served with <span className="text-highlight">Love</span></h2>
             <p className="lead">
-              Founded in 2010, Nikhil's Bakery began as a small family dream in a cozy corner of the city. 
+              Founded in 2021, Nikhil's Bakery began as a small family dream in a cozy corner of the city. 
               Today, we are a beloved neighborhood institution known for our artisanal techniques and unwavering quality.
             </p>
             <p>

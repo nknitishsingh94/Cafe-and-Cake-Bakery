@@ -13,7 +13,7 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span className="hero-badge">✨ Artisanal Excellence since 2010</span>
+            <span className="hero-badge">✨ Artisanal Excellence since 2021</span>
             <h1>Savor the Art of <br /> <span className="text-highlight">Fine Baking</span></h1>
             <p>
               Discover a world where every pastry tells a story and every cup of coffee is a masterpiece. 
