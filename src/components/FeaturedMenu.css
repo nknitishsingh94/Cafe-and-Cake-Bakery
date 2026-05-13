@@ -1,0 +1,130 @@
+.menu-section {
+  padding: 100px 0;
+  background-color: var(--white);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.menu-card {
+  background: var(--bg-main);
+  border-radius: 30px;
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.menu-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  background: white;
+}
+
+.card-img-wrapper {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.menu-card:hover .card-img-wrapper img {
+  transform: scale(1.1);
+}
+
+.item-tag {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--white);
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.add-cart-btn {
+  position: absolute;
+  bottom: -50px;
+  right: 15px;
+  background: var(--primary);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px rgba(139, 94, 52, 0.3);
+}
+
+.menu-card:hover .add-cart-btn {
+  bottom: 15px;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.price {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.card-body h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.card-body p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.menu-footer {
+  margin-top: 60px;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}

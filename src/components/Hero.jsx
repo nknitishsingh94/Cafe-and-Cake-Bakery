@@ -1,0 +1,78 @@
+import React from 'react';
+import { ArrowRight, Play } from 'lucide-react';
+import { motion } from 'framer-motion';
+import './Hero.css';
+
+const Hero = () => {
+  return (
+    <section className="hero">
+      <div className="container">
+        <div className="hero-content">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <span className="hero-badge">✨ Artisanal Excellence since 2010</span>
+            <h1>Savor the Art of <br /> <span className="text-highlight">Fine Baking</span></h1>
+            <p>
+              Discover a world where every pastry tells a story and every cup of coffee is a masterpiece. 
+              Handcrafted daily with passion, precision, and the finest organic ingredients.
+            </p>
+            <div className="hero-btns">
+              <button className="btn btn-primary">
+                Explore Menu <ArrowRight size={18} />
+              </button>
+              <button className="btn-secondary">
+                <div className="play-icon"><Play size={16} fill="currentColor" /></div>
+                Our Story
+              </button>
+            </div>
+            
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-num">15+</span>
+                <span className="stat-label">Years of Experience</span>
+              </div>
+              <div className="stat-divider"></div>
+              <div className="stat-item">
+                <span className="stat-num">50+</span>
+                <span className="stat-label">Daily Specialties</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="hero-image-container"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
+            <div className="image-blob"></div>
+            <img 
+              src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop" 
+              alt="Fresh Bread" 
+              className="main-hero-img" 
+            />
+            <div className="floating-card card-1">
+              <div className="card-icon">🍰</div>
+              <div>
+                <p className="card-title">Best Seller</p>
+                <p className="card-subtitle">Velvet Cake</p>
+              </div>
+            </div>
+            <div className="floating-card card-2">
+              <div className="card-icon">☕</div>
+              <div>
+                <p className="card-title">Morning Pick</p>
+                <p className="card-subtitle">Arabica Roast</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

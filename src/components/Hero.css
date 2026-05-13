@@ -1,0 +1,224 @@
+.hero {
+  padding: 180px 0 120px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(circle at 10% 20%, rgba(212, 163, 115, 0.08), transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(139, 94, 52, 0.05), transparent 40%);
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 100px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--white);
+  color: var(--primary);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.hero-content h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
+  margin-bottom: 25px;
+  letter-spacing: -1.5px;
+}
+
+.text-highlight {
+  color: var(--primary);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-content p {
+  font-size: 20px;
+  color: var(--text-muted);
+  margin-bottom: 45px;
+  max-width: 520px;
+  line-height: 1.5;
+}
+
+.hero-btns {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.play-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  transition: var(--transition);
+}
+
+.btn-secondary:hover .play-icon {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.stat-num {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: var(--text-main);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.hero-image-container {
+  position: relative;
+}
+
+.image-blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 110%;
+  background: var(--accent);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  opacity: 0.1;
+  z-index: -1;
+  animation: blob 10s infinite alternate;
+}
+
+@keyframes blob {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  100% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 60%; }
+}
+
+.main-hero-img {
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+.floating-card {
+  position: absolute;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: float 4s infinite ease-in-out;
+}
+
+.card-1 {
+  top: 10%;
+  left: -15%;
+}
+
+.card-2 {
+  bottom: 15%;
+  right: -5%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.card-icon {
+  font-size: 24px;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.card-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+@media (max-width: 1200px) {
+  .hero-content h1 {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    padding: 120px 0 60px;
+  }
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 60px;
+  }
+  .hero-content p,
+  .hero-btns,
+  .hero-stats {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  .card-1 { left: 0; }
+  .card-2 { right: 0; }
+}
+
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 38px;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
