@@ -7,6 +7,31 @@ import './CartDrawer.css';
 const CartDrawer = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();
 
+  const handleCheckout = () => {
+    if (cart.length === 0) return;
+
+    // Replace with the real WhatsApp number of the bakery
+    const businessNumber = "919876543210"; 
+    
+    // Construct a professional WhatsApp message
+    let message = `*📦 New Order from Nikhil's Bakery*%0A`;
+    message += `-----------------------------------%0A`;
+    
+    cart.forEach((item, index) => {
+      message += `${index + 1}. *${item.name}*%0A`;
+      message += `   Qty: ${item.quantity} | Price: ${item.price}%0A`;
+    });
+
+    message += `-----------------------------------%0A`;
+    message += `*Total Bill: ₹${cartTotal}*%0A`;
+    message += `-----------------------------------%0A`;
+    message += `%0APlease confirm my order and let me know the delivery time! 🍰`;
+
+    // Open WhatsApp
+    const whatsappUrl = `https://wa.me/${businessNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <AnimatePresence>
       {isCartOpen && (
@@ -92,9 +117,12 @@ const CartDrawer = () => {
                   <span>Subtotal</span>
                   <span className="total-price">₹{cartTotal}</span>
                 </div>
-                <p className="footer-note">Shipping and taxes calculated at checkout.</p>
-                <button className="btn btn-primary checkout-btn">
-                  Checkout Now
+                <p className="footer-note">Orders are sent directly to our WhatsApp for quick confirmation.</p>
+                <button 
+                  className="btn btn-primary checkout-btn"
+                  onClick={handleCheckout}
+                >
+                  Checkout via WhatsApp
                 </button>
               </div>
             )}
