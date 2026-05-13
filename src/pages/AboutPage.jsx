@@ -35,8 +35,8 @@ const AboutPage = () => {
               transition={{ duration: 0.8 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1556217477-d3252514d809?q=80&w=2071&auto=format&fit=crop" 
-                alt="Our Bakery" 
+                src="https://images.unsplash.com/photo-1485331129317-1717811a2b75?q=80&w=2062&auto=format&fit=crop" 
+                alt="Our Artisanal Process" 
               />
             </motion.div>
             <motion.div 
@@ -48,7 +48,7 @@ const AboutPage = () => {
               <h2>Our Humble <span className="text-highlight">Beginnings</span></h2>
               <p>
                 What started as a small passion project in Nikhil's home kitchen has blossomed into the city's most beloved artisanal sanctuary. 
-                We believe that great bread isn't just made; it's nurtured.
+                We believe that great bread isn't just made; it's nurtured with time, patience, and the highest quality ingredients.
               </p>
               <p>
                 Every loaf of sourdough we bake undergoes a 48-hour fermentation process, ensuring a depth of flavor and texture that mass-produced bread simply cannot match. 
@@ -98,12 +98,12 @@ const AboutPage = () => {
               <h2>Meet Our <span className="text-highlight">Artisans</span></h2>
               <p>
                 Our team consists of passionate bakers, expert baristas, and hospitality enthusiasts who all share one common goal: 
-                to make your day a little bit sweeter.
+                to make your day a little bit sweeter with every serve.
               </p>
             </div>
             <div className="team-images">
-              <img src="https://images.unsplash.com/photo-1579306194872-64d3b7bac4c2?q=80&w=2071&auto=format&fit=crop" alt="Bakers" className="team-img-1" />
-              <img src="https://images.unsplash.com/photo-1595126731403-430c61550198?q=80&w=2070&auto=format&fit=crop" alt="Barista" className="team-img-2" />
+              <img src="https://images.unsplash.com/photo-1568822529241-158a502446f0?q=80&w=2072&auto=format&fit=crop" alt="The Baking Team" className="team-img-1" />
+              <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=2070&auto=format&fit=crop" alt="Expert Barista" className="team-img-2" />
             </div>
           </div>
         </div>
