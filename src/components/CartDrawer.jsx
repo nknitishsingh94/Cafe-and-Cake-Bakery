@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send, CheckSquare, Square } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
@@ -11,6 +11,7 @@ const CartDrawer = () => {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [orderType, setOrderType] = useState('delivery');
   const [tableNumber, setTableNumber] = useState('');
+  const [hasPaid, setHasPaid] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ const CartDrawer = () => {
   const handleUPILink = () => {
     const upiUrl = `upi://pay?pa=${upiId}&pn=Nikhil%20Bakery&am=${advanceAmount}&cu=INR&tn=Order%20Advance`;
     window.location.href = upiUrl;
+    // We don't setHasPaid(true) automatically, user must check it
   };
 
   const handleCheckout = () => {
@@ -41,6 +43,7 @@ const CartDrawer = () => {
     if (!customerName.trim()) return alert("Please enter your name.");
     if (orderType === 'delivery' && !deliveryAddress.trim()) return alert("Please enter address.");
     if (orderType === 'dine-in' && !tableNumber.trim()) return alert("Please enter table number.");
+    if (!hasPaid) return alert("Please pay the 50% advance first and check the confirmation box.");
 
     const businessNumber = "918795919866"; 
     let message = `*📦 New Order from Nikhil's Bakery*%0A%0A`;
@@ -54,7 +57,7 @@ const CartDrawer = () => {
     message += `%0A*Total Bill: ₹${cartTotal}*%0A`;
     message += `*Advance Paid (50%): ₹${advanceAmount}*%0A`;
     message += `-----------------------------------%0A`;
-    message += `%0A_Order placed via Website._ ✅`;
+    message += `%0A_Advance payment completed via UPI. Sending screenshot now!_ ✅`;
 
     window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
     setIsCartOpen(false);
@@ -93,7 +96,19 @@ const CartDrawer = () => {
                     )}
                   </div>
 
+                  <div className="upi-payment-box">
+                    <div className="upi-header"><CreditCard size={18} /> <span>One-Click Pay</span></div>
+                    <p>Click below to pay 50% advance (₹{advanceAmount}) first.</p>
+                    <button className="btn upi-pay-btn" onClick={handleUPILink}>Pay ₹{advanceAmount} Advance</button>
+                    
+                    <div className={`payment-confirm ${hasPaid ? 'confirmed' : ''}`} onClick={() => setHasPaid(!hasPaid)}>
+                      {hasPaid ? <CheckSquare size={20} /> : <Square size={20} />}
+                      <span>I have completed the payment</span>
+                    </div>
+                  </div>
+
                   <div className="cart-items">
+                    <h3>Review Items</h3>
                     {cart.map((item) => (
                       <div key={item.id} className="cart-item">
                         <div className="item-img"><img src={item.image} alt={item.name} /></div>
@@ -108,13 +123,6 @@ const CartDrawer = () => {
                       </div>
                     ))}
                   </div>
-
-                  <div className="upi-payment-box">
-                    <div className="upi-header"><CreditCard size={18} /> <span>One-Click Pay</span></div>
-                    <p>Pay 50% advance instantly via PhonePe, GPay, or Paytm.</p>
-                    <button className="btn upi-pay-btn" onClick={handleUPILink}>Pay ₹{advanceAmount} Now</button>
-                    <span className="upi-id-text">ID: {upiId}</span>
-                  </div>
                 </>
               ) : (
                 <div className="empty-cart">
@@ -128,11 +136,14 @@ const CartDrawer = () => {
             {cart.length > 0 && (
               <div className="cart-footer">
                 <div className="payment-summary">
-                  <div className="summary-row"><span>Subtotal</span><span>₹{cartTotal}</span></div>
-                  <div className="summary-row advance"><span>Advance to Pay</span><span>₹{advanceAmount}</span></div>
+                  <div className="summary-row"><span>Total Bill</span><span>₹{cartTotal}</span></div>
+                  <div className="summary-row advance"><span>Advance Paid</span><span>₹{advanceAmount}</span></div>
                 </div>
-                <button className="btn btn-primary checkout-btn" onClick={handleCheckout}>
-                  Confirm & Send Order <Send size={18} />
+                <button 
+                  className={`btn btn-primary checkout-btn ${!hasPaid ? 'disabled' : ''}`} 
+                  onClick={handleCheckout}
+                >
+                  Place Order <Send size={18} />
                 </button>
               </div>
             )}
