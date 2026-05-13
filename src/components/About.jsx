@@ -17,8 +17,8 @@ const About = () => {
           >
             <div className="image-stack">
               <img 
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070&auto=format&fit=crop" 
-                alt="Baking Process" 
+                src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop" 
+                alt="Our Artisanal Baking Process" 
                 className="img-main" 
               />
               <div className="img-overlay-card">

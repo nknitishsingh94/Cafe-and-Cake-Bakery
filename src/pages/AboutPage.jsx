@@ -35,8 +35,8 @@ const AboutPage = () => {
               transition={{ duration: 0.8 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1485331129317-1717811a2b75?q=80&w=2062&auto=format&fit=crop" 
-                alt="Our Artisanal Process" 
+                src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2052&auto=format&fit=crop" 
+                alt="Handcrafted with Passion" 
               />
             </motion.div>
             <motion.div 
@@ -102,8 +102,8 @@ const AboutPage = () => {
               </p>
             </div>
             <div className="team-images">
-              <img src="https://images.unsplash.com/photo-1568822529241-158a502446f0?q=80&w=2072&auto=format&fit=crop" alt="The Baking Team" className="team-img-1" />
-              <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=2070&auto=format&fit=crop" alt="Expert Barista" className="team-img-2" />
+              <img src="https://images.unsplash.com/photo-1581339399838-2a120c18bba3?q=80&w=2070&auto=format&fit=crop" alt="Our Baking Team" className="team-img-1" />
+              <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop" alt="Our Barista Mastery" className="team-img-2" />
             </div>
           </div>
         </div>
