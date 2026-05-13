@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
 
@@ -11,6 +12,7 @@ const CartDrawer = () => {
   const [orderType, setOrderType] = useState('delivery');
   const [tableNumber, setTableNumber] = useState('');
   const [isLocating, setIsLocating] = useState(false);
+  const navigate = useNavigate();
 
   const advanceAmount = (cartTotal / 2).toFixed(0);
   const upiId = "8795919866@ibl";
@@ -30,7 +32,6 @@ const CartDrawer = () => {
   };
 
   const handleUPILink = () => {
-    // UPI Deep Link for mobile apps
     const upiUrl = `upi://pay?pa=${upiId}&pn=Nikhil%20Bakery&am=${advanceAmount}&cu=INR&tn=Order%20Advance`;
     window.location.href = upiUrl;
   };
@@ -53,9 +54,11 @@ const CartDrawer = () => {
     message += `%0A*Total Bill: ₹${cartTotal}*%0A`;
     message += `*Advance Paid (50%): ₹${advanceAmount}*%0A`;
     message += `-----------------------------------%0A`;
-    message += `%0A_Order placed via Website. Please confirm!_ ✅`;
+    message += `%0A_Order placed via Website._ ✅`;
 
     window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
+    setIsCartOpen(false);
+    navigate('/order-success');
   };
 
   return (
@@ -107,13 +110,9 @@ const CartDrawer = () => {
                   </div>
 
                   <div className="upi-payment-box">
-                    <div className="upi-header">
-                      <CreditCard size={18} /> <span>One-Click Pay</span>
-                    </div>
+                    <div className="upi-header"><CreditCard size={18} /> <span>One-Click Pay</span></div>
                     <p>Pay 50% advance instantly via PhonePe, GPay, or Paytm.</p>
-                    <button className="btn upi-pay-btn" onClick={handleUPILink}>
-                      Pay ₹{advanceAmount} Now
-                    </button>
+                    <button className="btn upi-pay-btn" onClick={handleUPILink}>Pay ₹{advanceAmount} Now</button>
                     <span className="upi-id-text">ID: {upiId}</span>
                   </div>
                 </>

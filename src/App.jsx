@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MenuPage from './pages/MenuPage';
 import AboutPage from './pages/AboutPage';
+import OrderSuccess from './pages/OrderSuccess';
 import CartDrawer from './components/CartDrawer';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             } />
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
           </Routes>
           <Footer />
         </div>

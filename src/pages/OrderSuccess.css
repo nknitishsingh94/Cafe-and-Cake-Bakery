@@ -1,0 +1,172 @@
+.order-success-page {
+  padding: 150px 0 80px;
+  background: var(--bg-main);
+  min-height: 100vh;
+}
+
+.success-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 50px;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.success-icon {
+  color: #4BB543;
+  margin-bottom: 20px;
+}
+
+.success-card h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: var(--text-main);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.order-meta {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-id {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.order-details-box {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.order-details-box h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.receipt-info {
+  display: flex;
+  gap: 10px;
+}
+
+.receipt-name {
+  font-weight: 600;
+}
+
+.receipt-qty {
+  color: var(--text-muted);
+}
+
+.receipt-total {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed #eee;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.grand-total {
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.next-steps {
+  text-align: left;
+  background: rgba(212, 163, 115, 0.05);
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+}
+
+.next-steps h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step-item {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-item p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.success-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.success-actions .btn {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .success-card {
+    padding: 30px 20px;
+  }
+  .success-actions {
+    flex-direction: column;
+  }
+  .order-meta {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
