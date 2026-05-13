@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Wallet } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
 
@@ -10,11 +10,10 @@ const CartDrawer = () => {
   const handleCheckout = () => {
     if (cart.length === 0) return;
 
-    // Use the user's specific WhatsApp number
     const businessNumber = "918795919866"; 
+    const advanceAmount = (cartTotal / 2).toFixed(0);
     
-    // Construct a professional WhatsApp message
-    let message = `*📦 New Order from Nikhil's Bakery*%0A`;
+    let message = `*📦 New Order & Advance Request*%0A`;
     message += `-----------------------------------%0A`;
     
     cart.forEach((item, index) => {
@@ -23,11 +22,12 @@ const CartDrawer = () => {
     });
 
     message += `-----------------------------------%0A`;
-    message += `*Total Bill: ₹${cartTotal}*%0A`;
+    message += `*Total Order Value: ₹${cartTotal}*%0A`;
+    message += `*Advance to Pay (50%): ₹${advanceAmount}*%0A`;
+    message += `*Remaining Balance: ₹${advanceAmount}*%0A`;
     message += `-----------------------------------%0A`;
-    message += `%0APlease confirm my order and let me know the delivery time! 🍰`;
+    message += `%0AI am ready to pay the *₹${advanceAmount} advance* to confirm my order. Please share your payment details! 🍰`;
 
-    // Open WhatsApp
     const whatsappUrl = `https://wa.me/${businessNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -36,7 +36,6 @@ const CartDrawer = () => {
     <AnimatePresence>
       {isCartOpen && (
         <>
-          {/* Backdrop */}
           <motion.div 
             className="cart-backdrop"
             initial={{ opacity: 0 }}
@@ -45,7 +44,6 @@ const CartDrawer = () => {
             onClick={() => setIsCartOpen(false)}
           />
           
-          {/* Drawer */}
           <motion.div 
             className="cart-drawer"
             initial={{ x: '100%' }}
@@ -75,10 +73,7 @@ const CartDrawer = () => {
                       <div className="item-info">
                         <div className="item-header">
                           <h4>{item.name}</h4>
-                          <button 
-                            className="remove-item" 
-                            onClick={() => removeFromCart(item.id)}
-                          >
+                          <button className="remove-item" onClick={() => removeFromCart(item.id)}>
                             <Trash2 size={16} />
                           </button>
                         </div>
@@ -86,13 +81,9 @@ const CartDrawer = () => {
                         <div className="item-footer">
                           <span className="item-price">{item.price}</span>
                           <div className="qty-controls">
-                            <button onClick={() => updateQuantity(item.id, -1)}>
-                              <Minus size={14} />
-                            </button>
+                            <button onClick={() => updateQuantity(item.id, -1)}><Minus size={14} /></button>
                             <span>{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, 1)}>
-                              <Plus size={14} />
-                            </button>
+                            <button onClick={() => updateQuantity(item.id, 1)}><Plus size={14} /></button>
                           </div>
                         </div>
                       </div>
@@ -104,25 +95,33 @@ const CartDrawer = () => {
                   <ShoppingBag size={64} opacity={0.1} />
                   <h3>Your bag is empty</h3>
                   <p>Looks like you haven't added anything yet.</p>
-                  <button className="btn btn-primary" onClick={() => setIsCartOpen(false)}>
-                    Start Shopping
-                  </button>
+                  <button className="btn btn-primary" onClick={() => setIsCartOpen(false)}>Start Shopping</button>
                 </div>
               )}
             </div>
 
             {cart.length > 0 && (
               <div className="cart-footer">
-                <div className="total-row">
-                  <span>Subtotal</span>
-                  <span className="total-price">₹{cartTotal}</span>
+                <div className="payment-summary">
+                  <div className="summary-row">
+                    <span>Total Amount</span>
+                    <span>₹{cartTotal}</span>
+                  </div>
+                  <div className="summary-row advance">
+                    <span>Advance (50%)</span>
+                    <span>₹{(cartTotal / 2).toFixed(0)}</span>
+                  </div>
+                  <div className="summary-row balance">
+                    <span>Balance on Delivery</span>
+                    <span>₹{(cartTotal / 2).toFixed(0)}</span>
+                  </div>
                 </div>
-                <p className="footer-note">Orders are sent directly to our WhatsApp for quick confirmation.</p>
-                <button 
-                  className="btn btn-primary checkout-btn"
-                  onClick={handleCheckout}
-                >
-                  Checkout via WhatsApp
+                <div className="policy-note">
+                  <Wallet size={16} />
+                  <p>50% advance payment is required to confirm fresh baking.</p>
+                </div>
+                <button className="btn btn-primary checkout-btn" onClick={handleCheckout}>
+                  Confirm Order & Pay Advance
                 </button>
               </div>
             )}
