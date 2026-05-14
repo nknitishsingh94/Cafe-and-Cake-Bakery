@@ -78,7 +78,7 @@
 .review-modal {
   position: fixed;
   top: 45%;
-  left: 50%;
+  left: 60%;
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 450px;
@@ -195,5 +195,5 @@
   .reviews-grid { grid-template-columns: 1fr; }
   .section-header-flex { flex-direction: column; gap: 20px; text-align: center; }
   .header-text h2 { font-size: 32px; }
-  .review-modal { padding: 25px; }
+  .review-modal { padding: 25px; left: 50%; }
 }
