@@ -62,20 +62,7 @@ const Hero = () => {
               <img src={logo} alt="Nikhil's Premium Logo" />
             </motion.div>
 
-            <div className="floating-card card-1">
-              <div className="card-icon">🍰</div>
-              <div>
-                <p className="card-title">Best Seller</p>
-                <p className="card-subtitle">Velvet Cake</p>
-              </div>
-            </div>
-            <div className="floating-card card-2">
-              <div className="card-icon">☕</div>
-              <div>
-                <p className="card-title">Morning Pick</p>
-                <p className="card-subtitle">Arabica Roast</p>
-              </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
