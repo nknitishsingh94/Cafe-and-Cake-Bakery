@@ -77,12 +77,12 @@
 
 .review-modal {
   position: fixed;
-  top: 50%; /* Back to center */
-  left: 50%; /* Back to center */
-  transform: translate(-50%, -50%);
+  top: 40px; /* Pin to top to prevent bottom cutoff */
+  left: 50%;
+  transform: translateX(-50%);
   width: 90%;
   max-width: 450px;
-  max-height: 85vh;
+  max-height: 80vh;
   background: #ffffff;
   border-radius: 30px;
   padding: 35px;
