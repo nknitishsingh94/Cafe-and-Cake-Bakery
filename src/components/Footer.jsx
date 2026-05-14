@@ -90,7 +90,7 @@ const Footer = () => {
               </div>
               <div className="contact-item">
                 <Mail size={18} />
-                <span>hello@nikhilsbakery.com</span>
+                <a href="mailto:nknitishsingh94@gmail.com">nknitishsingh94@gmail.com</a>
               </div>
             </div>
           </div>
@@ -99,8 +99,8 @@ const Footer = () => {
         <div className="footer-bottom">
           <p>&copy; 2026 Nikhil's Bakery & Cafe. All rights reserved.</p>
           <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
           </div>
         </div>
       </div>

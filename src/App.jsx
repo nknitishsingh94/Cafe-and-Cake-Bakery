@@ -13,6 +13,8 @@ import Footer from './components/Footer';
 import MenuPage from './pages/MenuPage';
 import AboutPage from './pages/AboutPage';
 import OrderSuccess from './pages/OrderSuccess';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import CartDrawer from './components/CartDrawer';
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
           <Footer />
         </div>

@@ -33,7 +33,7 @@ const Contact = () => {
                   <div className="icon-box"><Mail size={24} /></div>
                   <div>
                     <h4>Email</h4>
-                    <p>hello@nikhilsbakery.com</p>
+                    <p><a href="mailto:nknitishsingh94@gmail.com">nknitishsingh94@gmail.com</a></p>
                   </div>
                 </div>
                 <div className="info-item">
@@ -49,20 +49,20 @@ const Contact = () => {
           </div>
           
           <div className="contact-form-panel">
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form action="https://formspree.io/nknitishsingh94@gmail.com" method="POST">
               <div className="form-grid">
                 <div className="form-group">
                   <label>Full Name</label>
-                  <input type="text" placeholder="John Doe" />
+                  <input type="text" name="name" placeholder="John Doe" required />
                 </div>
                 <div className="form-group">
                   <label>Email Address</label>
-                  <input type="email" placeholder="john@example.com" />
+                  <input type="email" name="email" placeholder="john@example.com" required />
                 </div>
               </div>
               <div className="form-group">
                 <label>Subject</label>
-                <select>
+                <select name="subject">
                   <option>Order Inquiry</option>
                   <option>Catering Request</option>
                   <option>Feedback</option>
@@ -71,10 +71,10 @@ const Contact = () => {
               </div>
               <div className="form-group">
                 <label>Your Message</label>
-                <textarea rows="5" placeholder="Tell us how we can help..."></textarea>
+                <textarea name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
               </div>
               <div className="form-actions">
-                <button className="btn btn-primary">
+                <button type="submit" className="btn btn-primary">
                   Send Message <Send size={18} />
                 </button>
               </div>
