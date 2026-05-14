@@ -27,6 +27,22 @@ const initialReviews = [
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop",
     text: "Nikhil's Cafe has the perfect roast. Every cup is consistent and the latte art is always a beautiful touch to my morning.",
     rating: 5
+  },
+  {
+    id: 4,
+    name: "Rahul Sharma",
+    role: "Tech Professional",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop",
+    text: "Amazing place to work and grab a quick bite. The internet is fast and the coffee is even faster! Best cookies in town.",
+    rating: 5
+  },
+  {
+    id: 5,
+    name: "Priya Patel",
+    role: "Local Resident",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop",
+    text: "The customized cakes for my daughter's birthday were a hit! Everyone loved the flavor and the artistic design.",
+    rating: 5
   }
 ];
 
@@ -50,6 +66,9 @@ const Reviews = () => {
     setNewReview({ name: '', text: '', rating: 5, role: 'Happy Guest' });
   };
 
+  // Double the reviews for infinite loop effect
+  const displayReviews = [...reviews, ...reviews];
+
   return (
     <section className="reviews-section" id="reviews">
       <div className="container">
@@ -62,41 +81,45 @@ const Reviews = () => {
             <Plus size={22} /> <span>Write a Review</span>
           </button>
         </div>
-        
-        <div className="reviews-grid">
-          {reviews.map((review, i) => (
-            <motion.div 
-              key={review.id}
-              className="review-card"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="quote-icon">
-                <Quote size={40} fill="currentColor" opacity={0.1} />
+      </div>
+
+      {/* Infinite Horizontal Carousel (Anti-Clockwise Loop) */}
+      <div className="reviews-carousel-wrapper">
+        <motion.div 
+          className="reviews-track"
+          animate={{ x: [0, -2500] }} // Adjust based on content width
+          transition={{ 
+            duration: 40, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+        >
+          {displayReviews.map((review, i) => (
+            <div key={`${review.id}-${i}`} className="review-card-carousel">
+              <div className="quote-icon-sm">
+                <Quote size={30} fill="currentColor" opacity={0.1} />
               </div>
               <div className="stars">
                 {[...Array(5)].map((_, index) => (
                   <Star 
                     key={index} 
-                    size={16} 
+                    size={14} 
                     fill={index < review.rating ? "#d4a373" : "none"} 
                     color="#d4a373" 
                   />
                 ))}
               </div>
-              <p className="review-text">"{review.text}"</p>
-              <div className="review-user">
+              <p className="review-text-sm">"{review.text}"</p>
+              <div className="review-user-sm">
                 <img src={review.image} alt={review.name} />
-                <div className="user-info">
+                <div className="user-info-sm">
                   <h4>{review.name}</h4>
                   <span>{review.role}</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -142,7 +165,7 @@ const Reviews = () => {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star 
                         key={star}
-                        size={32}
+                        size={28}
                         onClick={() => setNewReview({...newReview, rating: star})}
                         fill={star <= newReview.rating ? "#d4a373" : "none"}
                         color="#d4a373"
@@ -155,8 +178,8 @@ const Reviews = () => {
                 <div className="form-group">
                   <label>Your Experience</label>
                   <textarea 
-                    placeholder="Describe your visit, the food, and the service..." 
-                    rows="4"
+                    placeholder="Describe your visit..." 
+                    rows="3"
                     value={newReview.text}
                     onChange={(e) => setNewReview({...newReview, text: e.target.value})}
                     required
@@ -164,7 +187,7 @@ const Reviews = () => {
                 </div>
 
                 <button type="submit" className="btn btn-primary submit-btn">
-                  Publish Review <Send size={18} />
+                  Publish Review <Send size={16} />
                 </button>
               </form>
             </motion.div>

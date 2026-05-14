@@ -1,75 +1,110 @@
 .reviews-section {
-  padding: 100px 0;
+  padding: 80px 0;
   background: var(--bg-main);
+  overflow: hidden;
 }
 
 .section-header-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 
 .header-text h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 42px;
+  font-size: 38px;
   color: var(--text-main);
 }
 
 .add-review-btn {
   background: var(--text-main);
   color: white;
-  padding: 12px 25px;
+  padding: 10px 22px;
   border-radius: 50px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
+  gap: 8px;
+  font-size: 14px;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-.review-card {
-  background: white;
-  padding: 35px;
-  border-radius: 25px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.03);
+/* Infinite Carousel Styles */
+.reviews-carousel-wrapper {
+  width: 100%;
+  padding: 20px 0;
   position: relative;
 }
 
-.review-text {
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--text-main);
-  margin-bottom: 25px;
-  font-style: italic;
+.reviews-track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
 }
 
-.review-user {
+.review-card-carousel {
+  background: white;
+  min-width: 350px;
+  width: 350px;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.quote-icon-sm {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: var(--primary);
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 15px;
+}
+
+.review-text-sm {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  font-style: italic;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-user-sm {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.review-user img {
-  width: 45px;
-  height: 45px;
+.review-user-sm img {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-/* FIXED MODAL - HIGHER POSITION & SAFE HEIGHT */
+.user-info-sm h4 {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.user-info-sm span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Modal Fixes (from previous turns) */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   z-index: 9998;
@@ -77,113 +112,30 @@
 
 .review-modal {
   position: fixed;
-  top: 20px !important; /* Force to top */
+  top: 20px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: 92%;
   max-width: 450px;
-  max-height: 88vh !important; /* Use almost full height but safe */
+  max-height: 88vh !important;
   background: #ffffff;
   border-radius: 25px;
-  padding: 25px !important; /* Reduced padding */
+  padding: 25px !important;
   z-index: 9999;
   box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Custom scrollbar */
-.review-modal::-webkit-scrollbar { width: 5px; }
-.review-modal::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.modal-header h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-.modal-header p {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.close-modal {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #f1f3f5;
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.review-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Tighter gap */
-}
-
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.form-group input, 
-.form-group textarea {
-  width: 100%;
-  padding: 10px 15px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-}
-
-.star-input {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.star-clickable {
-  cursor: pointer;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-@media (max-width: 992px) {
-  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
-}
+.modal-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; }
+.close-modal { position: absolute; top: 15px; right: 15px; border: none; background: #eee; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
+.review-form { display: flex; flex-direction: column; gap: 15px; }
+.form-group label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 5px; }
+.form-group input, .form-group textarea { width: 100%; padding: 10px 15px; border-radius: 12px; border: 1px solid #ddd; background: #fafafa; font-size: 14px; outline: none; }
+.star-input { display: flex; justify-content: center; gap: 10px; }
+.submit-btn { width: 100%; padding: 12px; border-radius: 50px; font-weight: 700; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
 @media (max-width: 600px) {
-  .reviews-grid { grid-template-columns: 1fr; }
-  .section-header-flex { flex-direction: column; gap: 20px; text-align: center; }
-  .review-modal { width: 95%; top: 10px !important; padding: 20px !important; }
+  .section-header-flex { flex-direction: column; gap: 15px; text-align: center; }
+  .review-card-carousel { min-width: 280px; width: 280px; padding: 20px; }
+  .header-text h2 { font-size: 30px; }
 }
