@@ -82,7 +82,7 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <MapPin size={18} />
-                <span>123 Baker Street, Foodie City, IN</span>
+                <span>Lucknow, Uttar Pradesh, IN</span>
               </div>
               <div className="contact-item">
                 <Phone size={18} />
