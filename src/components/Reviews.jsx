@@ -1,9 +1,9 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { Star, Quote, Plus, X, Camera, Send } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Reviews.css';
 
-const reviews = [
+const initialReviews = [
   {
     id: 1,
     name: "Sarah Johnson",
@@ -31,12 +31,36 @@ const reviews = [
 ];
 
 const Reviews = () => {
+  const [reviews, setReviews] = useState(initialReviews);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newReview, setNewReview] = useState({ name: '', text: '', rating: 5, role: 'Customer' });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newReview.name || !newReview.text) return alert("Please fill all fields!");
+    
+    const reviewToAdd = {
+      ...newReview,
+      id: Date.now(),
+      image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop" // Default avatar
+    };
+    
+    setReviews([reviewToAdd, ...reviews]);
+    setIsModalOpen(false);
+    setNewReview({ name: '', text: '', rating: 5, role: 'Customer' });
+  };
+
   return (
     <section className="reviews-section" id="reviews">
       <div className="container">
-        <div className="section-header">
-          <span className="sub-title">Testimonials</span>
-          <h2>What Our Guests Say</h2>
+        <div className="section-header-flex">
+          <div className="header-text">
+            <span className="sub-title">Testimonials</span>
+            <h2>What Our Guests Say</h2>
+          </div>
+          <button className="btn btn-primary add-review-btn" onClick={() => setIsModalOpen(true)}>
+            <Plus size={20} /> Write a Review
+          </button>
         </div>
         
         <div className="reviews-grid">
@@ -53,8 +77,13 @@ const Reviews = () => {
                 <Quote size={40} fill="currentColor" opacity={0.1} />
               </div>
               <div className="stars">
-                {[...Array(review.rating)].map((_, index) => (
-                  <Star key={index} size={16} fill="#d4a373" color="#d4a373" />
+                {[...Array(5)].map((_, index) => (
+                  <Star 
+                    key={index} 
+                    size={16} 
+                    fill={index < review.rating ? "#d4a373" : "none"} 
+                    color="#d4a373" 
+                  />
                 ))}
               </div>
               <p className="review-text">"{review.text}"</p>
@@ -69,6 +98,76 @@ const Reviews = () => {
           ))}
         </div>
       </div>
+
+      {/* Review Submission Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <>
+            <motion.div 
+              className="modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+            />
+            <motion.div 
+              className="review-modal"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            >
+              <div className="modal-header">
+                <h3>Share Your Experience</h3>
+                <button className="close-modal" onClick={() => setIsModalOpen(false)}><X size={24} /></button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="review-form">
+                <div className="form-group">
+                  <label>Your Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="E.g. Rahul Singh" 
+                    value={newReview.name}
+                    onChange={(e) => setNewReview({...newReview, name: e.target.value})}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Rating</label>
+                  <div className="star-input">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star}
+                        size={28}
+                        onClick={() => setNewReview({...newReview, rating: star})}
+                        fill={star <= newReview.rating ? "#d4a373" : "none"}
+                        color="#d4a373"
+                        className="star-clickable"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Your Review</label>
+                  <textarea 
+                    placeholder="Tell us what you loved about our bakery..." 
+                    rows="4"
+                    value={newReview.text}
+                    onChange={(e) => setNewReview({...newReview, text: e.target.value})}
+                    required
+                  ></textarea>
+                </div>
+
+                <button type="submit" className="btn btn-primary submit-btn">
+                  Submit Review <Send size={18} />
+                </button>
+              </form>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
