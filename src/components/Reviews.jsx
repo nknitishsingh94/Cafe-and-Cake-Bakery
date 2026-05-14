@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, Quote, Plus, X, Camera, Send } from 'lucide-react';
+import { Star, Quote, Plus, X, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Reviews.css';
 
@@ -33,7 +33,7 @@ const initialReviews = [
 const Reviews = () => {
   const [reviews, setReviews] = useState(initialReviews);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newReview, setNewReview] = useState({ name: '', text: '', rating: 5, role: 'Customer' });
+  const [newReview, setNewReview] = useState({ name: '', text: '', rating: 5, role: 'Happy Guest' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,12 +42,12 @@ const Reviews = () => {
     const reviewToAdd = {
       ...newReview,
       id: Date.now(),
-      image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop" // Default avatar
+      image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop"
     };
     
     setReviews([reviewToAdd, ...reviews]);
     setIsModalOpen(false);
-    setNewReview({ name: '', text: '', rating: 5, role: 'Customer' });
+    setNewReview({ name: '', text: '', rating: 5, role: 'Happy Guest' });
   };
 
   return (
@@ -58,8 +58,8 @@ const Reviews = () => {
             <span className="sub-title">Testimonials</span>
             <h2>What Our Guests Say</h2>
           </div>
-          <button className="btn btn-primary add-review-btn" onClick={() => setIsModalOpen(true)}>
-            <Plus size={20} /> Write a Review
+          <button className="add-review-btn" onClick={() => setIsModalOpen(true)}>
+            <Plus size={22} /> <span>Write a Review</span>
           </button>
         </div>
         
@@ -99,7 +99,6 @@ const Reviews = () => {
         </div>
       </div>
 
-      {/* Review Submission Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <>
@@ -112,21 +111,25 @@ const Reviews = () => {
             />
             <motion.div 
               className="review-modal"
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
             >
+              <button className="close-modal" onClick={() => setIsModalOpen(false)}>
+                <X size={24} />
+              </button>
+
               <div className="modal-header">
-                <h3>Share Your Experience</h3>
-                <button className="close-modal" onClick={() => setIsModalOpen(false)}><X size={24} /></button>
+                <h3>Leave a Review</h3>
+                <p>Your feedback helps us grow and serve you better.</p>
               </div>
 
               <form onSubmit={handleSubmit} className="review-form">
                 <div className="form-group">
-                  <label>Your Name</label>
+                  <label>Full Name</label>
                   <input 
                     type="text" 
-                    placeholder="E.g. Rahul Singh" 
+                    placeholder="Enter your name" 
                     value={newReview.name}
                     onChange={(e) => setNewReview({...newReview, name: e.target.value})}
                     required
@@ -134,12 +137,12 @@ const Reviews = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Rating</label>
+                  <label>Overall Rating</label>
                   <div className="star-input">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star 
                         key={star}
-                        size={28}
+                        size={32}
                         onClick={() => setNewReview({...newReview, rating: star})}
                         fill={star <= newReview.rating ? "#d4a373" : "none"}
                         color="#d4a373"
@@ -150,9 +153,9 @@ const Reviews = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Your Review</label>
+                  <label>Your Experience</label>
                   <textarea 
-                    placeholder="Tell us what you loved about our bakery..." 
+                    placeholder="Describe your visit, the food, and the service..." 
                     rows="4"
                     value={newReview.text}
                     onChange={(e) => setNewReview({...newReview, text: e.target.value})}
@@ -161,7 +164,7 @@ const Reviews = () => {
                 </div>
 
                 <button type="submit" className="btn btn-primary submit-btn">
-                  Submit Review <Send size={18} />
+                  Publish Review <Send size={18} />
                 </button>
               </form>
             </motion.div>
