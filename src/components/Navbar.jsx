@@ -3,6 +3,7 @@ import { Menu, X, ChevronDown, Cake, Coffee, Search, ShoppingBag } from 'lucide-
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -43,8 +44,11 @@ const Navbar = () => {
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
           <Link to="/" className="logo">
-            <span className="logo-text">Nikhil's</span>
-            <span className="logo-sub">Bakery & Cafe</span>
+            <img src={logo} alt="Nikhil's Logo" className="logo-img" />
+            <div className="logo-info">
+              <span className="logo-text">Nikhil's</span>
+              <span className="logo-sub">Bakery & Cafe</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
