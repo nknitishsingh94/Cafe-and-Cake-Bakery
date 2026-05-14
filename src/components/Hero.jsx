@@ -1,7 +1,8 @@
 import React from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 import './Hero.css';
 
 const Hero = () => {
@@ -51,6 +52,16 @@ const Hero = () => {
               alt="Fresh Bread" 
               className="main-hero-img" 
             />
+
+            {/* LARGE PREMIUM LOGO EMBLEM */}
+            <motion.div 
+              className="hero-logo-badge"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            >
+              <img src={logo} alt="Nikhil's Premium Logo" />
+            </motion.div>
+
             <div className="floating-card card-1">
               <div className="card-icon">🍰</div>
               <div>
