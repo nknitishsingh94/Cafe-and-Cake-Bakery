@@ -93,11 +93,17 @@
   color: var(--text-main);
 }
 
+.nav-actions .btn-primary {
+  padding: 8px 20px;
+  font-size: 13px;
+  border-radius: 50px;
+}
+
 .full-btn {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .close-btn {
