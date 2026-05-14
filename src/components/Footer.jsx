@@ -1,9 +1,14 @@
 import React from 'react';
-import { Share2, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, MessageSquare, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
+  const whatsappNumber = "8795919866";
+  const whatsappUrl = `https://wa.me/91${whatsappNumber}`;
+  const instagramUrl = "https://instagram.com/nikhils_bakery_cafe"; // Placeholder based on brand
+  const facebookUrl = "https://facebook.com/nikhilsbakerycafe"; // Placeholder based on brand
+
   return (
     <footer className="footer">
       <div className="container">
@@ -17,9 +22,15 @@ const Footer = () => {
               Crafting sweet moments and brewing excellence since 2021. Your favorite neighborhood spot for fresh bakes and premium coffee.
             </p>
             <div className="social-links">
-              <a href="#" className="social-icon"><Share2 size={20} /></a>
-              <a href="#" className="social-icon"><Share2 size={20} /></a>
-              <a href="#" className="social-icon"><Share2 size={20} /></a>
+              <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="social-icon fb" title="Facebook">
+                <Facebook size={20} />
+              </a>
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="social-icon ig" title="Instagram">
+                <Instagram size={20} />
+              </a>
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="social-icon wa" title="WhatsApp">
+                <MessageSquare size={20} />
+              </a>
             </div>
           </div>
 
@@ -37,11 +48,11 @@ const Footer = () => {
           <div className="footer-links">
             <h3>Our Menu</h3>
             <ul>
-              <li><a href="#">Custom Cakes</a></li>
-              <li><a href="#">Pastries</a></li>
-              <li><a href="#">Artisan Bread</a></li>
-              <li><a href="#">Specialty Coffee</a></li>
-              <li><a href="#">Sandwiches</a></li>
+              <li><Link to="/menu">Custom Cakes</Link></li>
+              <li><Link to="/menu">Pastries</Link></li>
+              <li><Link to="/menu">Artisan Bread</Link></li>
+              <li><Link to="/menu">Specialty Coffee</Link></li>
+              <li><Link to="/menu">Sandwiches</Link></li>
             </ul>
           </div>
 
@@ -54,7 +65,7 @@ const Footer = () => {
               </div>
               <div className="contact-item">
                 <Phone size={18} />
-                <span>+91 87959 19866</span>
+                <span>+91 {whatsappNumber}</span>
               </div>
               <div className="contact-item">
                 <Mail size={18} />
