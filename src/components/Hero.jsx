@@ -63,7 +63,6 @@ const Hero = () => {
             </motion.div>
 
             </motion.div>
-          </motion.div>
         </div>
       </div>
     </section>
