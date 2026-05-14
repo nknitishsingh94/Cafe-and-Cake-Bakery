@@ -63,7 +63,7 @@
   object-fit: cover;
 }
 
-/* Fixed & Optimized Review Modal */
+/* Restored to Perfect Center */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -77,29 +77,20 @@
 
 .review-modal {
   position: fixed;
-  top: 45%;
-  left: 60%;
+  top: 50%; /* Back to center */
+  left: 50%; /* Back to center */
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 450px;
-  max-height: 85vh; /* Prevents being cut off on small screens */
+  max-height: 85vh;
   background: #ffffff;
   border-radius: 30px;
   padding: 35px;
   z-index: 9999;
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-  overflow-y: auto; /* Scroll if content is too long */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-}
-
-/* Custom scrollbar for the modal */
-.review-modal::-webkit-scrollbar {
-  width: 5px;
-}
-.review-modal::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 10px;
 }
 
 .modal-header {
@@ -133,7 +124,6 @@
   align-items: center;
   justify-content: center;
   color: var(--text-main);
-  z-index: 10;
 }
 
 .review-form {
@@ -168,10 +158,6 @@
   display: flex;
   justify-content: center;
   gap: 12px;
-}
-
-.star-clickable {
-  cursor: pointer;
 }
 
 .submit-btn {
