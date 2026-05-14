@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import logo from '../assets/logo.png';
 import './Legal.css';
 
@@ -10,8 +12,13 @@ const TermsOfService = () => {
   return (
     <div className="legal-page">
       <div className="legal-hero">
+        <Link to="/" className="back-btn">
+          <ArrowLeft size={20} /> Back to Home
+        </Link>
         <div className="container">
-          <img src={logo} alt="Nikhil's Logo" className="legal-logo" />
+          <div className="logo-wrapper">
+            <img src={logo} alt="Nikhil's Logo" className="legal-logo" />
+          </div>
           <h1>Terms of Service</h1>
           <p>Last Updated: May 2026</p>
         </div>
