@@ -26,13 +26,12 @@ const CartDrawer = () => {
     const code = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOtp(code);
     setOtpSent(true);
-    alert(`[Simulated SMS] Your Bakery Verification OTP is: ${code}`);
   };
 
   const handleVerifyOtp = () => {
     if (enteredOtp === generatedOtp) {
       setIsPhoneVerified(true);
-      alert("Phone number verified successfully!");
+      setOtpSent(false); // hide the test SMS
     } else {
       alert("Invalid OTP. Please try again.");
     }
@@ -152,7 +151,7 @@ const CartDrawer = () => {
                             />
                           </div>
                           {!isPhoneVerified && (
-                            <button className="btn btn-secondary" style={{ padding: '0 15px', whiteSpace: 'nowrap' }} onClick={handleSendOtp}>
+                            <button type="button" className="btn btn-secondary" style={{ padding: '0 15px', whiteSpace: 'nowrap' }} onClick={handleSendOtp}>
                               {otpSent ? 'Resend' : 'Get OTP'}
                             </button>
                           )}
@@ -160,20 +159,25 @@ const CartDrawer = () => {
                         </div>
 
                         {otpSent && !isPhoneVerified && (
-                          <div className="input-group" style={{ display: 'flex', gap: '10px', background: 'transparent', padding: 0 }}>
-                            <div style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'var(--bg)', borderRadius: '12px', padding: '0 15px' }}>
-                              <CheckSquare size={18} style={{ color: 'var(--text-muted)' }} />
-                              <input 
-                                type="text" 
-                                placeholder="Enter 4-digit OTP" 
-                                value={enteredOtp} 
-                                onChange={(e) => setEnteredOtp(e.target.value)} 
-                                style={{ background: 'transparent', border: 'none', padding: '12px', width: '100%', outline: 'none', letterSpacing: '2px' }}
-                              />
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <div style={{ fontSize: '0.85rem', color: '#1976d2', background: '#e3f2fd', padding: '8px 12px', borderRadius: '8px', borderLeft: '4px solid #1976d2' }}>
+                              <strong>[TEST SMS]</strong> Your OTP is: <strong>{generatedOtp}</strong>
                             </div>
-                            <button className="btn btn-primary" style={{ padding: '0 15px' }} onClick={handleVerifyOtp}>
-                              Verify
-                            </button>
+                            <div className="input-group" style={{ display: 'flex', gap: '10px', background: 'transparent', padding: 0 }}>
+                              <div style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'var(--bg)', borderRadius: '12px', padding: '0 15px' }}>
+                                <CheckSquare size={18} style={{ color: 'var(--text-muted)' }} />
+                                <input 
+                                  type="text" 
+                                  placeholder="Enter 4-digit OTP" 
+                                  value={enteredOtp} 
+                                  onChange={(e) => setEnteredOtp(e.target.value)} 
+                                  style={{ background: 'transparent', border: 'none', padding: '12px', width: '100%', outline: 'none', letterSpacing: '2px' }}
+                                />
+                              </div>
+                              <button type="button" className="btn btn-primary" style={{ padding: '0 15px' }} onClick={handleVerifyOtp}>
+                                Verify
+                              </button>
+                            </div>
                           </div>
                         )}
                         <div className="input-group address-group">
