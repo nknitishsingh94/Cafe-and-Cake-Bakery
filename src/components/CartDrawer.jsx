@@ -116,7 +116,6 @@ const CartDrawer = () => {
   };
 
   return (
-    <>
     <AnimatePresence>
       {isCartOpen && (
         <>
@@ -263,8 +262,6 @@ const CartDrawer = () => {
         </>
       )}
     </AnimatePresence>
-    </AnimatePresence>
-    </>
   );
 };
 
