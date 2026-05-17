@@ -6,6 +6,7 @@ import './DeliveryPortal.css';
 const DeliveryPortal = () => {
   const [data, setData] = useState(null);
   const [enteredPin, setEnteredPin] = useState('');
+  const [executiveName, setExecutiveName] = useState('');
   const [status, setStatus] = useState('pending'); // pending, success, error
   const location = useLocation();
 
@@ -25,11 +26,16 @@ const DeliveryPortal = () => {
   if (!data) return <div className="delivery-loading"><h2>Loading Delivery Details...</h2></div>;
 
   const handleVerify = () => {
+    if (!executiveName.trim()) {
+      alert("Please enter your name as the Delivery Executive.");
+      return;
+    }
+
     if (enteredPin === String(data.deliveryOtp)) {
       setStatus('success');
       // Send message to owner that delivery is completed
       const businessNumber = "918795919866";
-      const message = `*✅ DELIVERY SUCCESSFUL*%0A%0AOrder ID: #${data.orderId}%0ADelivered to: ${data.customerName}%0APhone: ${data.customerPhone}%0A%0A_Verified via Delivery PIN by Executive._`;
+      const message = `*✅ DELIVERY SUCCESSFUL*%0A%0AOrder ID: #${data.orderId}%0ADelivered to: ${data.customerName}%0APhone: ${data.customerPhone}%0A%0A_Verified via Delivery PIN by Executive: *${executiveName}*_`;
       window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
     } else {
       setStatus('error');
@@ -80,13 +86,20 @@ const DeliveryPortal = () => {
               <div className="pin-input-group">
                 <input 
                   type="text" 
+                  placeholder="Your Name (Delivery Boy)" 
+                  value={executiveName}
+                  onChange={(e) => setExecutiveName(e.target.value)}
+                  style={{ fontSize: '1.2rem', letterSpacing: 'normal', textAlign: 'left' }}
+                />
+                <input 
+                  type="text" 
                   placeholder="Enter 4-Digit PIN" 
                   maxLength={4}
                   value={enteredPin}
                   onChange={(e) => setEnteredPin(e.target.value.replace(/\D/g, ''))}
                   className={status === 'error' ? 'error-input' : ''}
                 />
-                <button className="verify-btn" onClick={handleVerify} disabled={enteredPin.length !== 4}>
+                <button className="verify-btn" onClick={handleVerify} disabled={enteredPin.length !== 4 || !executiveName.trim()}>
                   Verify & Mark Delivered
                 </button>
                 {status === 'error' && <p className="error-text">Incorrect PIN. Try again.</p>}
