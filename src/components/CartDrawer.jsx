@@ -57,20 +57,8 @@ const CartDrawer = () => {
   };
 
   const handleUPILink = () => {
-    setShowGateway(true);
-    setGatewayStatus('idle');
-  };
-
-  const processPayment = () => {
-    setGatewayStatus('processing');
-    setTimeout(() => {
-      setGatewayStatus('success');
-      setHasPaid(true);
-      // Auto-generate a valid 12-digit mock UTR
-      const mockUtr = Math.floor(100000000000 + Math.random() * 900000000000).toString();
-      setUtrNumber(mockUtr);
-      setTimeout(() => setShowGateway(false), 2000);
-    }, 2000);
+    const upiUrl = `upi://pay?pa=${upiId}&pn=Nikhil%20Bakery&am=${advanceAmount}&cu=INR&tn=Order%20Advance`;
+    window.location.href = upiUrl;
   };
 
   const handleCheckout = () => {
@@ -209,18 +197,24 @@ const CartDrawer = () => {
                   </div>
 
                   <div className="upi-payment-box">
-                    <div className="upi-header"><CreditCard size={18} /> <span>Secure Payment</span></div>
+                    <div className="upi-header"><CreditCard size={18} /> <span>One-Click Pay</span></div>
+                    <p>Click below to pay 50% advance (₹{advanceAmount}) first.</p>
+                    <button className="btn upi-pay-btn" onClick={handleUPILink} style={{ marginBottom: '15px' }}>Open UPI App (GPay/PhonePe)</button>
                     
-                    {!hasPaid ? (
-                      <>
-                        <p>Pay 50% advance (₹{advanceAmount}) to confirm your order.</p>
-                        <button className="btn upi-pay-btn" onClick={handleUPILink} style={{ marginTop: '10px', background: '#333' }}>Pay ₹{advanceAmount} Now</button>
-                      </>
-                    ) : (
-                      <div className="payment-success-badge" style={{ background: '#e8f5e9', color: '#2e7d32', padding: '15px', borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginTop: '10px', border: '1px solid #c8e6c9' }}>
-                        <CheckCircle size={30} />
-                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Payment Successful</span>
-                        <span style={{ fontSize: '0.9rem', color: '#555' }}>Ref No: {utrNumber}</span>
+                    <div className={`payment-confirm ${hasPaid ? 'confirmed' : ''}`} onClick={() => setHasPaid(!hasPaid)}>
+                      {hasPaid ? <CheckSquare size={20} /> : <Square size={20} />}
+                      <span>I have completed the payment</span>
+                    </div>
+                    {hasPaid && (
+                      <div className="input-group" style={{ marginTop: '15px' }}>
+                        <CreditCard size={18} />
+                        <input 
+                          type="text" 
+                          placeholder="Enter 12-digit UTR / Ref Number" 
+                          maxLength={12}
+                          value={utrNumber} 
+                          onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, ''))} 
+                        />
                       </div>
                     )}
                   </div>
@@ -269,49 +263,6 @@ const CartDrawer = () => {
         </>
       )}
     </AnimatePresence>
-    <AnimatePresence>
-      {showGateway && (
-        <motion.div className="payment-gateway-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <motion.div className="payment-gateway-modal" initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}>
-            {gatewayStatus === 'idle' && (
-              <>
-                <div className="gateway-header">
-                  <h3>Secure Payment Gateway</h3>
-                  <button onClick={() => setShowGateway(false)}><X size={20} /></button>
-                </div>
-                <div className="gateway-body">
-                  <div className="gateway-amount">Paying ₹{advanceAmount}</div>
-                  <button className="gateway-option" onClick={processPayment}>
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/upi-2085056-1747946.png" alt="UPI" />
-                    <span>Pay via UPI App</span>
-                  </button>
-                  <button className="gateway-option" onClick={processPayment}>
-                    <CreditCard size={24} color="#666" />
-                    <span>Pay via Credit/Debit Card</span>
-                  </button>
-                </div>
-                <div className="gateway-footer">Secured by AES-256 Encryption</div>
-              </>
-            )}
-            
-            {gatewayStatus === 'processing' && (
-              <div className="gateway-processing">
-                <div className="spinner"></div>
-                <p>Processing Payment...</p>
-                <span>Please do not close this window.</span>
-              </div>
-            )}
-
-            {gatewayStatus === 'success' && (
-              <div className="gateway-success">
-                <CheckCircle size={60} color="#4CAF50" />
-                <h3>Payment Successful!</h3>
-                <p>Redirecting back to checkout...</p>
-              </div>
-            )}
-          </motion.div>
-        </motion.div>
-      )}
     </AnimatePresence>
     </>
   );
