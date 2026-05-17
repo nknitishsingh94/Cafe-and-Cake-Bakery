@@ -9,6 +9,10 @@ const CartDrawer = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [enteredOtp, setEnteredOtp] = useState('');
+  const [generatedOtp, setGeneratedOtp] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [orderType, setOrderType] = useState('delivery');
   const [tableNumber, setTableNumber] = useState('');
@@ -16,6 +20,23 @@ const CartDrawer = () => {
   const [utrNumber, setUtrNumber] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const navigate = useNavigate();
+
+  const handleSendOtp = () => {
+    if (!customerPhone.trim() || customerPhone.length < 10) return alert("Please enter a valid phone number first.");
+    const code = Math.floor(1000 + Math.random() * 9000).toString();
+    setGeneratedOtp(code);
+    setOtpSent(true);
+    alert(`[Simulated SMS] Your Bakery Verification OTP is: ${code}`);
+  };
+
+  const handleVerifyOtp = () => {
+    if (enteredOtp === generatedOtp) {
+      setIsPhoneVerified(true);
+      alert("Phone number verified successfully!");
+    } else {
+      alert("Invalid OTP. Please try again.");
+    }
+  };
 
   const advanceAmount = (cartTotal / 2).toFixed(0);
   const upiId = "8795919866@ibl";
@@ -43,9 +64,13 @@ const CartDrawer = () => {
   const handleCheckout = () => {
     if (cart.length === 0) return;
     if (!customerName.trim()) return alert("Please enter your name.");
-    if (!customerPhone.trim() || customerPhone.length < 10) return alert("Please enter a valid phone number.");
-    if (orderType === 'delivery' && !deliveryAddress.trim()) return alert("Please enter address.");
-    if (orderType === 'dine-in' && !tableNumber.trim()) return alert("Please enter table number.");
+    if (orderType === 'delivery') {
+      if (!customerPhone.trim() || customerPhone.length < 10) return alert("Please enter a valid phone number.");
+      if (!isPhoneVerified) return alert("Please verify your phone number with OTP first.");
+      if (!deliveryAddress.trim()) return alert("Please enter address.");
+    } else {
+      if (!tableNumber.trim()) return alert("Please enter table number.");
+    }
     if (!hasPaid) return alert("Please pay the 50% advance first and check the confirmation box.");
     if (!utrNumber.trim()) return alert("Please enter the UTR / Transaction Reference Number as proof of payment.");
 
@@ -54,10 +79,20 @@ const CartDrawer = () => {
     const businessNumber = "918795919866"; 
     let message = `*📦 New Order from Nikhil's Bakery*%0A%0A`;
     message += `👤 *Name:* ${customerName}%0A`;
-    message += `📞 *Phone:* ${customerPhone}%0A`;
     if (orderType === 'delivery') {
+      message += `📞 *Phone:* ${customerPhone}%0A`;
       message += `📍 *Address:* ${deliveryAddress}%0A`;
       message += `🔑 *Delivery OTP:* ${deliveryOtp}%0A`;
+      
+      // Generate Delivery Link
+      const orderId = Math.floor(100000 + Math.random() * 900000);
+      const deliveryData = {
+        orderId, customerName, customerPhone, deliveryAddress, deliveryOtp
+      };
+      const encodedData = btoa(JSON.stringify(deliveryData));
+      const deliveryLink = `${window.location.origin}/delivery-portal?d=${encodedData}`;
+      
+      message += `%0A🚚 *Delivery Boy Link:*%0A${deliveryLink}%0A`;
     } else {
       message += `🪑 *Table:* ${tableNumber}%0A`;
     }
@@ -101,15 +136,51 @@ const CartDrawer = () => {
                       <User size={18} />
                       <input type="text" placeholder="Your Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
                     </div>
-                    <div className="input-group">
-                      <Phone size={18} />
-                      <input type="tel" placeholder="Phone Number" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
-                    </div>
+                    
                     {orderType === 'delivery' ? (
-                      <div className="input-group address-group">
-                        <MapIcon size={18} /><textarea placeholder="Delivery Address" rows="2" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} />
-                        <button className={`location-btn ${isLocating ? 'locating' : ''}`} onClick={fetchLocation}><Navigation size={16} /></button>
-                      </div>
+                      <>
+                        <div className="input-group" style={{ display: 'flex', gap: '10px', background: 'transparent', padding: 0 }}>
+                          <div style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'var(--bg)', borderRadius: '12px', padding: '0 15px' }}>
+                            <Phone size={18} style={{ color: 'var(--text-muted)' }} />
+                            <input 
+                              type="tel" 
+                              placeholder="Phone Number" 
+                              value={customerPhone} 
+                              onChange={(e) => { setCustomerPhone(e.target.value); setIsPhoneVerified(false); setOtpSent(false); }} 
+                              disabled={isPhoneVerified}
+                              style={{ background: 'transparent', border: 'none', padding: '12px', width: '100%', outline: 'none' }}
+                            />
+                          </div>
+                          {!isPhoneVerified && (
+                            <button className="btn btn-secondary" style={{ padding: '0 15px', whiteSpace: 'nowrap' }} onClick={handleSendOtp}>
+                              {otpSent ? 'Resend' : 'Get OTP'}
+                            </button>
+                          )}
+                          {isPhoneVerified && <div style={{ display: 'flex', alignItems: 'center', color: 'green', padding: '0 10px', fontWeight: 'bold' }}>✓ Verified</div>}
+                        </div>
+
+                        {otpSent && !isPhoneVerified && (
+                          <div className="input-group" style={{ display: 'flex', gap: '10px', background: 'transparent', padding: 0 }}>
+                            <div style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'var(--bg)', borderRadius: '12px', padding: '0 15px' }}>
+                              <CheckSquare size={18} style={{ color: 'var(--text-muted)' }} />
+                              <input 
+                                type="text" 
+                                placeholder="Enter 4-digit OTP" 
+                                value={enteredOtp} 
+                                onChange={(e) => setEnteredOtp(e.target.value)} 
+                                style={{ background: 'transparent', border: 'none', padding: '12px', width: '100%', outline: 'none', letterSpacing: '2px' }}
+                              />
+                            </div>
+                            <button className="btn btn-primary" style={{ padding: '0 15px' }} onClick={handleVerifyOtp}>
+                              Verify
+                            </button>
+                          </div>
+                        )}
+                        <div className="input-group address-group">
+                          <MapIcon size={18} /><textarea placeholder="Delivery Address" rows="2" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} />
+                          <button className={`location-btn ${isLocating ? 'locating' : ''}`} onClick={fetchLocation}><Navigation size={16} /></button>
+                        </div>
+                      </>
                     ) : (
                       <div className="input-group"><Store size={18} /><input type="text" placeholder="Table Number" value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} /></div>
                     )}
