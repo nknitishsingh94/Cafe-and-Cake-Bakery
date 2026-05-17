@@ -71,7 +71,11 @@ const CartDrawer = () => {
       if (!tableNumber.trim()) return alert("Please enter table number.");
     }
     if (!hasPaid) return alert("Please pay the 50% advance first and check the confirmation box.");
-    if (!utrNumber.trim()) return alert("Please enter the UTR / Transaction Reference Number as proof of payment.");
+    
+    const utrRegex = /^\d{12}$/;
+    if (!utrNumber.trim() || !utrRegex.test(utrNumber.trim())) {
+      return alert("Please enter a valid 12-digit UTR / Transaction Reference Number as proof of payment.");
+    }
 
     const deliveryOtp = orderType === 'delivery' ? Math.floor(1000 + Math.random() * 9000) : null;
 
@@ -205,8 +209,9 @@ const CartDrawer = () => {
                         <input 
                           type="text" 
                           placeholder="Enter 12-digit UTR / Ref Number" 
+                          maxLength={12}
                           value={utrNumber} 
-                          onChange={(e) => setUtrNumber(e.target.value)} 
+                          onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, ''))} 
                         />
                       </div>
                     )}
