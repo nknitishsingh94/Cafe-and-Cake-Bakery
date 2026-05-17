@@ -128,6 +128,7 @@ const CartDrawer = () => {
   };
 
   return (
+    <>
     <AnimatePresence>
       {isCartOpen && (
         <>
@@ -312,6 +313,7 @@ const CartDrawer = () => {
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 };
 
