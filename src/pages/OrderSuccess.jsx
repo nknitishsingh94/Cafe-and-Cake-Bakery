@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, ShoppingBag, ArrowRight, MapPin, Calendar, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { CheckCircle, ShoppingBag, ArrowRight, MapPin, Calendar, Clock, Key } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './OrderSuccess.css';
 
@@ -9,6 +9,8 @@ const OrderSuccess = () => {
   const { cart, cartTotal, clearCart } = useCart();
   const [orderSummary, setOrderSummary] = useState([]);
   const [finalTotal, setFinalTotal] = useState(0);
+  const location = useLocation();
+  const deliveryOtp = location.state?.deliveryOtp;
 
   useEffect(() => {
     // Capture cart data before clearing
@@ -46,6 +48,17 @@ const OrderSuccess = () => {
               <span className="order-id">ID: #{orderNumber}</span>
             </div>
           </div>
+
+          {deliveryOtp && (
+            <div className="delivery-otp-box" style={{ background: '#FFF3E0', padding: '15px', borderRadius: '12px', marginBottom: '20px', textAlign: 'center', border: '1px dashed #FF9800' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#E65100', marginBottom: '5px' }}>
+                <Key size={20} />
+                <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Delivery PIN</h3>
+              </div>
+              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold', color: '#D84315', letterSpacing: '4px' }}>{deliveryOtp}</p>
+              <p style={{ margin: '5px 0 0 0', fontSize: '0.85rem', color: '#5D4037' }}>Please share this PIN with the delivery executive only when you receive your order.</p>
+            </div>
+          )}
 
           <div className="order-details-box">
             <h3>Order Summary</h3>

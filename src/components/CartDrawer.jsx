@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send, CheckSquare, Square } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Wallet, User, MapPin as MapIcon, Navigation, Store, CreditCard, Send, CheckSquare, Square, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './CartDrawer.css';
@@ -8,10 +8,12 @@ import './CartDrawer.css';
 const CartDrawer = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();
   const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [orderType, setOrderType] = useState('delivery');
   const [tableNumber, setTableNumber] = useState('');
   const [hasPaid, setHasPaid] = useState(false);
+  const [utrNumber, setUtrNumber] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const navigate = useNavigate();
 
@@ -41,27 +43,37 @@ const CartDrawer = () => {
   const handleCheckout = () => {
     if (cart.length === 0) return;
     if (!customerName.trim()) return alert("Please enter your name.");
+    if (!customerPhone.trim() || customerPhone.length < 10) return alert("Please enter a valid phone number.");
     if (orderType === 'delivery' && !deliveryAddress.trim()) return alert("Please enter address.");
     if (orderType === 'dine-in' && !tableNumber.trim()) return alert("Please enter table number.");
     if (!hasPaid) return alert("Please pay the 50% advance first and check the confirmation box.");
+    if (!utrNumber.trim()) return alert("Please enter the UTR / Transaction Reference Number as proof of payment.");
+
+    const deliveryOtp = orderType === 'delivery' ? Math.floor(1000 + Math.random() * 9000) : null;
 
     const businessNumber = "918795919866"; 
     let message = `*📦 New Order from Nikhil's Bakery*%0A%0A`;
     message += `👤 *Name:* ${customerName}%0A`;
-    if (orderType === 'delivery') message += `📍 *Address:* ${deliveryAddress}%0A`;
-    else message += `🪑 *Table:* ${tableNumber}%0A`;
+    message += `📞 *Phone:* ${customerPhone}%0A`;
+    if (orderType === 'delivery') {
+      message += `📍 *Address:* ${deliveryAddress}%0A`;
+      message += `🔑 *Delivery OTP:* ${deliveryOtp}%0A`;
+    } else {
+      message += `🪑 *Table:* ${tableNumber}%0A`;
+    }
     
     message += `%0A*Order Items:*%0A`;
     cart.forEach((item, i) => message += `${i + 1}. ${item.name} x ${item.quantity}%0A`);
     
     message += `%0A*Total Bill: ₹${cartTotal}*%0A`;
     message += `*Advance Paid (50%): ₹${advanceAmount}*%0A`;
+    message += `*UTR / Ref No:* ${utrNumber}%0A`;
     message += `-----------------------------------%0A`;
     message += `%0A_Advance payment completed via UPI. Sending screenshot now!_ ✅`;
 
     window.open(`https://wa.me/${businessNumber}?text=${message}`, '_blank');
     setIsCartOpen(false);
-    navigate('/order-success');
+    navigate('/order-success', { state: { deliveryOtp } });
   };
 
   return (
@@ -85,7 +97,14 @@ const CartDrawer = () => {
                   </div>
 
                   <div className="customer-info-form">
-                    <div className="input-group"><User size={18} /><input type="text" placeholder="Your Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></div>
+                    <div className="input-group">
+                      <User size={18} />
+                      <input type="text" placeholder="Your Name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                    </div>
+                    <div className="input-group">
+                      <Phone size={18} />
+                      <input type="tel" placeholder="Phone Number" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
+                    </div>
                     {orderType === 'delivery' ? (
                       <div className="input-group address-group">
                         <MapIcon size={18} /><textarea placeholder="Delivery Address" rows="2" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} />
@@ -105,6 +124,17 @@ const CartDrawer = () => {
                       {hasPaid ? <CheckSquare size={20} /> : <Square size={20} />}
                       <span>I have completed the payment</span>
                     </div>
+                    {hasPaid && (
+                      <div className="input-group" style={{ marginTop: '15px' }}>
+                        <CreditCard size={18} />
+                        <input 
+                          type="text" 
+                          placeholder="Enter 12-digit UTR / Ref Number" 
+                          value={utrNumber} 
+                          onChange={(e) => setUtrNumber(e.target.value)} 
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="cart-items">
